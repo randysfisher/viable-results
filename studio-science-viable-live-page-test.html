@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio Science Live Page Test | Viable</title>
+<meta name="description" content="Viable live page test results for the Studio Science agentic commerce readiness landing page: simulated demand across four buyer audiences, key insights, and recommended next steps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0e0e0e;
+  --surface:#191921;
+  --surface-2:#1f1f29;
+  --line:rgba(158,163,194,.18);
+  --line-soft:rgba(158,163,194,.10);
+  --paper:#f3f5f7;
+  --muted:#9ea3c2;
+  --green:#61d661;
+  --green-dim:rgba(97,214,97,.14);
+  --amber:#e5b34b;
+  --amber-dim:rgba(229,179,75,.12);
+  --display:"Cal Sans","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --pad:clamp(20px,5vw,64px);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 var(--pad)}
+h1,h2,h3{font-family:var(--display);font-weight:400;letter-spacing:-.01em;margin:0}
+p{margin:0}
+a{color:var(--green)}
+
+/* ---------- masthead ---------- */
+.masthead{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:24px;flex-wrap:wrap;
+  padding:36px 0 22px;
+  border-bottom:1px solid var(--line);
+}
+.masthead img{height:30px;width:auto;display:block}
+.masthead .doc{text-align:right;font-size:.8125rem;color:var(--muted);line-height:1.5}
+.masthead .doc strong{color:var(--paper);font-weight:600}
+
+/* ---------- verdict ---------- */
+.verdict{padding:clamp(40px,6vw,72px) 0 8px}
+.client{
+  font-size:.8125rem;color:var(--muted);
+  margin-bottom:14px;
+}
+.client b{color:var(--paper);font-weight:600}
+.verdict h1{
+  font-size:clamp(1.9rem,4.4vw,3rem);
+  line-height:1.14;
+  max-width:20ch;
+  margin-bottom:22px;
+}
+.verdict .lede{
+  font-size:clamp(1rem,1.6vw,1.125rem);
+  color:var(--muted);
+  max-width:62ch;
+  line-height:1.65;
+}
+.verdict .lede b{color:var(--paper);font-weight:600}
+
+/* viability scale */
+.scale{margin:34px 0 0;max-width:520px}
+.scale-track{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.scale-seg{
+  height:6px;border-radius:3px;background:rgba(158,163,194,.16);
+}
+.scale-seg.on{background:var(--amber)}
+.scale-labels{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;
+  margin-top:10px;font-size:.75rem;color:var(--muted);
+}
+.scale-labels span{text-align:center}
+.scale-labels .now{color:var(--amber);font-weight:600}
+
+/* ---------- stat strip ---------- */
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--line-soft);
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  margin:44px 0 0;
+}
+.stat{background:var(--surface);padding:22px 24px 20px}
+.stat .fig{
+  font-family:var(--display);
+  font-size:clamp(1.75rem,3.4vw,2.4rem);
+  line-height:1.05;letter-spacing:-.02em;
+}
+.stat .cap{font-size:.8125rem;color:var(--muted);margin-top:8px;line-height:1.45}
+
+/* ---------- sections ---------- */
+section{padding:clamp(52px,7vw,84px) 0 0}
+.sec-head{margin-bottom:26px;max-width:70ch}
+.sec-head h2{font-size:clamp(1.35rem,2.4vw,1.75rem);margin-bottom:8px}
+.sec-head p{color:var(--muted);font-size:.9375rem}
+
+/* ---------- audience bars ---------- */
+.aud-list{display:flex;flex-direction:column;gap:2px}
+.aud{
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(140px,1.6fr) auto;
+  gap:20px;align-items:center;
+  padding:18px 0;border-bottom:1px solid var(--line-soft);
+}
+.aud:first-child{border-top:1px solid var(--line-soft)}
+.aud-name{font-weight:600;font-size:.9375rem}
+.aud-note{color:var(--muted);font-weight:400;font-size:.8125rem;margin-top:3px;display:block}
+.bar{height:10px;border-radius:5px;background:rgba(158,163,194,.12);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:5px;background:var(--green)}
+.bar i.lead{background:var(--green)}
+.aud-val{font-family:var(--display);font-size:1.375rem;min-width:70px;text-align:right}
+
+/* ---------- insight cards ---------- */
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:24px 24px 26px;
+}
+.card h3{font-family:var(--body);font-weight:600;font-size:1.0625rem;line-height:1.35;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.9063rem;line-height:1.68}
+.card p b{color:var(--paper);font-weight:600}
+.card.win{border-left:2px solid var(--green)}
+.card.risk{border-left:2px solid var(--amber)}
+
+.subhead{
+  font-size:.9375rem;font-weight:600;color:var(--paper);
+  margin:34px 0 14px;padding-top:4px;
+}
+.subhead:first-of-type{margin-top:0}
+.subhead span{color:var(--muted);font-weight:400}
+
+/* ---------- friction chart ---------- */
+.reasons{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:14px;padding:26px 26px 22px;margin-top:16px;
+}
+.reasons h3{font-family:var(--body);font-weight:600;font-size:1.0625rem;margin-bottom:4px}
+.reasons .sub{color:var(--muted);font-size:.875rem;margin-bottom:22px}
+.frow{display:grid;grid-template-columns:minmax(0,.85fr) minmax(160px,1.15fr) 46px;gap:20px;align-items:center;padding:9px 0}
+.frow .lbl{font-size:.875rem}
+.frow .lbl em{font-style:normal;color:var(--muted);display:block;font-size:.8125rem;margin-top:2px}
+.fbar{height:8px;border-radius:4px;background:rgba(158,163,194,.12);overflow:hidden}
+.fbar i{display:block;height:100%;border-radius:4px;background:var(--amber);opacity:.85}
+.frow .pct{text-align:right;font-size:.875rem;font-weight:600;font-variant-numeric:tabular-nums}
+
+/* ---------- actions ---------- */
+.action{
+  background:var(--surface);border:1px solid var(--line);
+  border-left:2px solid var(--green);
+  border-radius:14px;padding:26px 26px 24px;
+}
+.action h3{font-family:var(--display);font-size:1.375rem;margin-bottom:12px;line-height:1.25}
+.action p{color:var(--muted);font-size:.9375rem;line-height:1.68}
+.next{
+  margin-top:18px;padding:16px 18px;
+  background:var(--surface-2);border-radius:10px;
+  font-size:.9063rem;line-height:1.6;color:var(--paper);
+}
+.next b{display:block;font-weight:600;font-size:.8125rem;color:var(--muted);margin-bottom:6px}
+
+/* ---------- table ---------- */
+.tablewrap{
+  border:1px solid var(--line);border-radius:14px;
+  background:var(--surface);overflow-x:auto;
+}
+table{width:100%;border-collapse:collapse;min-width:660px}
+th,td{padding:15px 18px;text-align:right;font-size:.875rem;white-space:nowrap}
+th{
+  color:var(--muted);font-weight:500;font-size:.8125rem;
+  border-bottom:1px solid var(--line);
+}
+th:first-child,td:first-child{text-align:left;white-space:normal;min-width:230px}
+td{border-bottom:1px solid var(--line-soft);font-variant-numeric:tabular-nums}
+tbody tr:last-child td{border-bottom:none}
+tr.total td{font-weight:600;background:rgba(158,163,194,.05);border-top:1px solid var(--line)}
+td.hi{color:var(--green);font-weight:600}
+
+.notice{
+  display:flex;gap:12px;align-items:flex-start;
+  border:1px solid rgba(97,214,97,.25);
+  background:rgba(97,214,97,.06);
+  border-radius:12px;padding:16px 18px;margin-bottom:16px;
+  font-size:.875rem;line-height:1.6;color:var(--paper);
+}
+.notice .dot{
+  flex:none;width:7px;height:7px;border-radius:50%;
+  background:var(--green);margin-top:8px;
+}
+.notice span{color:var(--muted)}
+
+/* ---------- method ---------- */
+.method{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+}
+.method div{
+  border-top:1px solid var(--line);padding-top:16px;
+}
+.method h3{font-family:var(--body);font-size:.9375rem;font-weight:600;margin-bottom:6px}
+.method p{color:var(--muted);font-size:.875rem;line-height:1.6}
+
+/* ---------- footer ---------- */
+footer{
+  margin-top:clamp(56px,7vw,88px);
+  border-top:1px solid var(--line);
+  padding:28px 0 56px;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:20px;flex-wrap:wrap;
+  font-size:.8125rem;color:var(--muted);
+}
+footer img{height:20px;width:auto;opacity:.85}
+
+/* ---------- responsive ---------- */
+@media (max-width:820px){
+  .grid-2,.stats,.method{grid-template-columns:1fr}
+  .stats{border-radius:14px}
+  .aud{grid-template-columns:1fr auto;gap:8px 16px}
+  .aud .bar{grid-column:1 / -1;order:3}
+  .aud-val{order:2}
+  .frow{grid-template-columns:1fr 46px}
+  .frow .fbar{grid-column:1 / -1;order:3;margin-top:6px}
+  .masthead .doc{text-align:left}
+}
+
+@media print{
+  body{background:#fff;color:#191921}
+  .wrap{max-width:none}
+  section{padding-top:32px;break-inside:avoid}
+  .card,.action,.friction,.tablewrap,.stat{break-inside:avoid}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <img src="data:image/png;base64,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" alt="Viable">
+    <div class="doc">
+      <strong>Live page test</strong><br>
+      Prepared for Studio Science &nbsp;|&nbsp; September 2, 2026
+    </div>
+  </header>
+
+  <div class="verdict">
+    <p class="client">Test subject: <b>Studio Science agentic commerce readiness landing page</b>, evaluated against four buyer audiences</p>
+    <h1>The ask is bigger than the evidence.</h1>
+    <p class="lede">
+      The strongest audience reached a <b>2.3% simulated conversion rate</b>, which puts the page in the medium demand band.
+      Interest is not the problem. Buyers stall at the final step, because booking a session is a heavier commitment than the
+      proof on the page currently supports. All four audiences landed within 0.3 points of each other, so the constraint is
+      the message, not the market.
+    </p>
+
+    <div class="scale" role="img" aria-label="Viability rating: medium, the middle of three bands">
+      <div class="scale-track">
+        <div class="scale-seg"></div>
+        <div class="scale-seg on"></div>
+        <div class="scale-seg"></div>
+      </div>
+      <div class="scale-labels">
+        <span>Low</span><span class="now">Medium viability</span><span>High</span>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="fig">2.3%</div>
+        <div class="cap">Best simulated conversion rate, from Directors of E-Commerce</div>
+      </div>
+      <div class="stat">
+        <div class="fig">0.3 pts</div>
+        <div class="cap">Total spread between the best and weakest audience, out of four tested</div>
+      </div>
+      <div class="stat">
+        <div class="fig">28%</div>
+        <div class="cap">Of Directors of E-Commerce said the scheduling ask felt premature without proof</div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <h2>How each audience responded</h2>
+      <p>Simulated conversion rate is the share of an audience that clicks a call to action after seeing the page. Each audience was modeled against 1,000 landing page views, for 4,000 simulated users in total.</p>
+    </div>
+
+    <div class="aud-list">
+      <div class="aud">
+        <div class="aud-name">Director of E-Commerce
+          <span class="aud-note">Strongest converter and best message fit at 6.1 out of 10.</span>
+        </div>
+        <div class="bar"><i class="lead" style="width:100%"></i></div>
+        <div class="aud-val">2.3%</div>
+      </div>
+      <div class="aud">
+        <div class="aud-name">VP of Engineering
+          <span class="aud-note">Close behind, but stalls on missing security and architecture detail.</span>
+        </div>
+        <div class="bar"><i style="width:95.7%"></i></div>
+        <div class="aud-val">2.2%</div>
+      </div>
+      <div class="aud">
+        <div class="aud-name">Mid-Market B2B Company Executives
+          <span class="aud-note">Matches engineering, and wants visible outcomes before the ask.</span>
+        </div>
+        <div class="bar"><i style="width:95.7%"></i></div>
+        <div class="aud-val">2.2%</div>
+      </div>
+      <div class="aud">
+        <div class="aud-name">Director, Content &amp; CX Strategy
+          <span class="aud-note">Lowest click rate and lowest message fit at 5.3 out of 10.</span>
+        </div>
+        <div class="bar"><i style="width:87%"></i></div>
+        <div class="aud-val">2.0%</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>What the page is doing well</h2>
+      <p>Signals worth protecting through any rewrite.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card win">
+        <h3>The concrete build path is what converts</h3>
+        <p>Directors of E-Commerce converted because the page names a specific job, wiring Salesforce Commerce Cloud and
+        Stripe together, and pairs it with a bounded entry offer in the 90 Minute Readiness Session. Naming the actual
+        integration and capping the commitment are the two things doing the work.</p>
+      </div>
+      <div class="card win">
+        <h3>Your best audience is already self-identifying</h3>
+        <p>Directors of E-Commerce posted the <b>highest message-audience fit at 6.1 out of 10</b> and the top conversion
+        rate at 2.3%. They responded specifically to "Sell Inside the AI Conversation" and the SFCC and Stripe
+        implementation claim. The page resonates with commerce owners rather than general leadership, which is a targeting
+        advantage as much as a copy one.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>What is holding it back</h2>
+      <p>Four issues account for most of the simulated non-conversions across the four audiences.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card risk">
+        <h3>The scheduling ask outruns the proof</h3>
+        <p>The single largest blocker. <b>28% of Directors of E-Commerce</b> and <b>23% of Content and CX leaders</b> said
+        "Schedule Session/Workshop" felt like too much commitment before seeing enough proof or specifics. Across every
+        pipeline, people asked what the readiness readout and the roadmap actually look like before agreeing to a meeting.
+        You are losing interested buyers at the last step, not the first.</p>
+      </div>
+      <div class="card risk">
+        <h3>No visible outcomes before the ask</h3>
+        <p><b>18% of Directors of E-Commerce</b> and <b>17% of mid-market B2B executives</b> held back because the page shows
+        no outcomes, metrics, or demonstrations ahead of the scheduling step. The Stripe Agentic Commerce Protocol
+        collaboration does lift credibility, but visitors still want concrete artifacts or results tied to the Readiness
+        Session itself.</p>
+      </div>
+      <div class="card risk">
+        <h3>Outside commerce, the copy reads storefront-first</h3>
+        <p>Content and CX leaders posted both the lowest conversion rate at 2.0% and the lowest fit score at 5.3 out of 10.
+        <b>26% said the copy leans too transaction and storefront heavy</b> for their day to day. The framing is also
+        jargon-forward, with terms like "AI agent protocols" going untranslated for adjacent stakeholders.</p>
+      </div>
+      <div class="card risk">
+        <h3>Engineering wants the security answer first</h3>
+        <p><b>31% of VP Engineering visitors</b> wanted clarity on authentication, PCI, and API boundaries before booking
+        anything. That is the highest single reason percentage in the test. For this audience the missing detail is not
+        proof of outcomes, it is proof of architecture.</p>
+      </div>
+    </div>
+
+    <div class="reasons">
+      <h3>Share of each audience citing this reason</h3>
+      <p class="sub">Read by audience, since each issue concentrates in a different buyer.</p>
+      <div class="frow">
+        <div class="lbl">Wanted auth, PCI, and API-boundary clarity first <em>VP Engineering</em></div>
+        <div class="fbar"><i style="width:100%"></i></div>
+        <div class="pct">31%</div>
+      </div>
+      <div class="frow">
+        <div class="lbl">Scheduling ask felt premature <em>Directors of E-Commerce</em></div>
+        <div class="fbar"><i style="width:90.3%"></i></div>
+        <div class="pct">28%</div>
+      </div>
+      <div class="frow">
+        <div class="lbl">Copy leans too transaction and storefront heavy <em>Content and CX leaders</em></div>
+        <div class="fbar"><i style="width:83.9%"></i></div>
+        <div class="pct">26%</div>
+      </div>
+      <div class="frow">
+        <div class="lbl">Scheduling ask felt premature <em>Content and CX leaders</em></div>
+        <div class="fbar"><i style="width:74.2%"></i></div>
+        <div class="pct">23%</div>
+      </div>
+      <div class="frow">
+        <div class="lbl">No visible outcomes before the ask <em>Directors of E-Commerce</em></div>
+        <div class="fbar"><i style="width:58.1%"></i></div>
+        <div class="pct">18%</div>
+      </div>
+      <div class="frow">
+        <div class="lbl">No visible outcomes before the ask <em>Mid-market B2B executives</em></div>
+        <div class="fbar"><i style="width:54.8%"></i></div>
+        <div class="pct">17%</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Recommended next steps</h2>
+      <p>Both actions are aimed at converting the demand the page is already generating, rather than finding new demand.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="action">
+        <h3>Lower the call to action friction with concrete proof</h3>
+        <p>This is a messaging gap, not a demand gap. Directors of E-Commerce hit a 2.3% simulated conversion rate, but 28%
+        still refused because "Schedule Session/Workshop" felt premature without deliverables and examples. Nothing here
+        requires changing the positioning.</p>
+        <div class="next">
+          <b>Next step</b>
+          Add an on-page "What you'll get" section describing the exact outputs of the 90 Minute Readiness Session, with
+          sample scorecard categories such as catalog, pricing, checkout, and governance, plus an example of the readout.
+          Rename the primary call to action to "Get readiness readout" and keep scheduling as the secondary step. Update
+          the copy to list five to seven checklist items and two sample artifacts, then rerun the same simulation.
+        </div>
+      </div>
+      <div class="action">
+        <h3>Focus outreach on ecommerce directors</h3>
+        <p>Directors of E-Commerce scored the highest message-audience fit at 6.1 out of 10, a measure of how closely the
+        copy matches what that audience cares about, and delivered the top conversion rate at 2.3%. They responded
+        specifically to "Sell Inside the AI Conversation" and the SFCC and Stripe implementation claim.</p>
+        <div class="next">
+          <b>Next step</b>
+          Tailor distribution to SFCC and Stripe commerce owners through email and LinkedIn targeting, and keep the SFCC
+          and Stripe line above the first call to action so relevance registers before anything is asked of the visitor.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Supporting data</h2>
+      <p>Each row shows the projected funnel if 1,000 people from that audience saw your promotion.</p>
+    </div>
+
+    <div class="notice">
+      <span class="dot"></span>
+      <div><b>These results are simulated.</b> <span>CTA clicks show simulated intent and estimated conversions are projected
+      real-world outcomes. Run this test with real people to get real analytics about your product.</span></div>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Audience</th>
+            <th scope="col">Promotion impressions</th>
+            <th scope="col">Landing page views</th>
+            <th scope="col">CTA clicks</th>
+            <th scope="col">Est. conversions</th>
+            <th scope="col">Simulated CVR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Director of E-Commerce</td>
+            <td>1,000</td><td>1,000</td><td>23</td><td>12</td><td class="hi">2.3%</td>
+          </tr>
+          <tr>
+            <td>Director, Content &amp; CX Strategy</td>
+            <td>1,000</td><td>1,000</td><td>20</td><td>10</td><td>2.0%</td>
+          </tr>
+          <tr>
+            <td>VP of Engineering</td>
+            <td>1,000</td><td>1,000</td><td>22</td><td>11</td><td>2.2%</td>
+          </tr>
+          <tr>
+            <td>Mid-Market B2B Company Executives</td>
+            <td>1,000</td><td>1,000</td><td>22</td><td>11</td><td>2.2%</td>
+          </tr>
+          <tr class="total">
+            <td>All audiences</td>
+            <td>4,000</td><td>4,000</td><td>87</td><td>44</td><td>2.2%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>How to read this report</h2>
+    </div>
+    <div class="method">
+      <div>
+        <h3>What was tested</h3>
+        <p>The live Studio Science agentic commerce readiness landing page, unchanged, run through a simulated conversion
+        funnel against four buyer audiences at 1,000 views each on September 2, 2026.</p>
+      </div>
+      <div>
+        <h3>What the numbers mean</h3>
+        <p>Simulated CVR is CTA clicks divided by landing page views. Message-audience fit scores how closely the page matches
+        what an audience cares about, on a 10 point scale. Reason percentages are shares of each audience.</p>
+      </div>
+      <div>
+        <h3>What it is good for</h3>
+        <p>Directional evidence about which message and audience to back next. It is not a forecast of live conversion rate.
+        Real-person testing is the layer that produces proof.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <img src="data:image/png;base64,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" alt="Viable">
+    <div>Prepared for Studio Science &nbsp;|&nbsp; September 2, 2026 &nbsp;|&nbsp; getviable.ai</div>
+  </footer>
+
+</div>
+</body>
+</html>
