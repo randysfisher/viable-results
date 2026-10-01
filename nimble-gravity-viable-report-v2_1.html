@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nimble Gravity Report v2 | Viable</title>
+<meta name="description" content="Viable live page test results for the Nimble Gravity Applied Anthropic Practice page: simulated demand across four enterprise buyer audiences, key insights, the competitive set, and recommended next steps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0e0e0e;
+  --surface:#191921;
+  --surface-2:#1f1f29;
+  --line:rgba(158,163,194,.18);
+  --line-soft:rgba(158,163,194,.10);
+  --paper:#f3f5f7;
+  --muted:#9ea3c2;
+  --green:#61d661;
+  --green-dim:rgba(97,214,97,.14);
+  --amber:#e5b34b;
+  --amber-dim:rgba(229,179,75,.12);
+  --display:"Cal Sans","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --pad:clamp(20px,5vw,64px);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 var(--pad)}
+h1,h2,h3{font-family:var(--display);font-weight:400;letter-spacing:-.01em;margin:0}
+p{margin:0}
+a{color:var(--green)}
+
+/* ---------- masthead ---------- */
+.masthead{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:24px;flex-wrap:wrap;
+  padding:36px 0 22px;
+  border-bottom:1px solid var(--line);
+}
+.masthead img{height:30px;width:auto;display:block}
+.masthead .doc{text-align:right;font-size:.8125rem;color:var(--muted);line-height:1.5}
+.masthead .doc strong{color:var(--paper);font-weight:600}
+
+/* ---------- verdict ---------- */
+.verdict{padding:clamp(40px,6vw,72px) 0 8px}
+.client{
+  font-size:.8125rem;color:var(--muted);
+  margin-bottom:14px;
+}
+.client b{color:var(--paper);font-weight:600}
+.verdict h1{
+  font-size:clamp(1.9rem,4.4vw,3rem);
+  line-height:1.14;
+  max-width:20ch;
+  margin-bottom:22px;
+}
+.verdict .lede{
+  font-size:clamp(1rem,1.6vw,1.125rem);
+  color:var(--muted);
+  max-width:62ch;
+  line-height:1.65;
+}
+.verdict .lede b{color:var(--paper);font-weight:600}
+
+/* viability scale */
+.scale{margin:34px 0 0;max-width:520px}
+.scale-track{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.scale-seg{
+  height:6px;border-radius:3px;background:rgba(158,163,194,.16);
+}
+.scale-seg.on{background:var(--amber)}
+.scale-labels{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;
+  margin-top:10px;font-size:.75rem;color:var(--muted);
+}
+.scale-labels span{text-align:center}
+.scale-labels .now{color:var(--amber);font-weight:600}
+
+/* ---------- stat strip ---------- */
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--line-soft);
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  margin:44px 0 0;
+}
+.stat{background:var(--surface);padding:22px 24px 20px}
+.stat .fig{
+  font-family:var(--display);
+  font-size:clamp(1.75rem,3.4vw,2.4rem);
+  line-height:1.05;letter-spacing:-.02em;
+}
+.stat .cap{font-size:.8125rem;color:var(--muted);margin-top:8px;line-height:1.45}
+
+/* ---------- sections ---------- */
+section{padding:clamp(52px,7vw,84px) 0 0}
+.sec-head{margin-bottom:26px;max-width:70ch}
+.sec-head h2{font-size:clamp(1.35rem,2.4vw,1.75rem);margin-bottom:8px}
+.sec-head p{color:var(--muted);font-size:.9375rem}
+
+/* ---------- audience bars ---------- */
+.aud-list{display:flex;flex-direction:column;gap:2px}
+.aud{
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(140px,1.6fr) auto;
+  gap:20px;align-items:center;
+  padding:18px 0;border-bottom:1px solid var(--line-soft);
+}
+.aud:first-child{border-top:1px solid var(--line-soft)}
+.aud-name{font-weight:600;font-size:.9375rem}
+.aud-note{color:var(--muted);font-weight:400;font-size:.8125rem;margin-top:3px;display:block}
+.bar{height:10px;border-radius:5px;background:rgba(158,163,194,.12);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:5px;background:var(--green)}
+.bar i.lead{background:var(--green)}
+.aud-val{font-family:var(--display);font-size:1.375rem;min-width:70px;text-align:right}
+
+/* ---------- insight cards ---------- */
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:24px 24px 26px;
+}
+.card h3{font-family:var(--body);font-weight:600;font-size:1.0625rem;line-height:1.35;margin-bottom:10px}
+.card p{color:var(--muted);font-size:.9063rem;line-height:1.68}
+.card p b{color:var(--paper);font-weight:600}
+.card.win{border-left:2px solid var(--green)}
+.card.risk{border-left:2px solid var(--amber)}
+
+.subhead{
+  font-size:.9375rem;font-weight:600;color:var(--paper);
+  margin:34px 0 14px;padding-top:4px;
+}
+.subhead:first-of-type{margin-top:0}
+.subhead span{color:var(--muted);font-weight:400}
+
+/* ---------- friction chart ---------- */
+.reasons{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:14px;padding:26px 26px 22px;margin-top:16px;
+}
+.reasons h3{font-family:var(--body);font-weight:600;font-size:1.0625rem;margin-bottom:4px}
+.reasons .sub{color:var(--muted);font-size:.875rem;margin-bottom:22px}
+.frow{display:grid;grid-template-columns:minmax(0,.85fr) minmax(160px,1.15fr) 46px;gap:20px;align-items:center;padding:9px 0}
+.frow .lbl{font-size:.875rem}
+.frow .lbl em{font-style:normal;color:var(--muted);display:block;font-size:.8125rem;margin-top:2px}
+.fbar{height:8px;border-radius:4px;background:rgba(158,163,194,.12);overflow:hidden}
+.fbar i{display:block;height:100%;border-radius:4px;background:var(--amber);opacity:.85}
+.frow .pct{text-align:right;font-size:.875rem;font-weight:600;font-variant-numeric:tabular-nums}
+
+/* ---------- actions ---------- */
+.action{
+  background:var(--surface);border:1px solid var(--line);
+  border-left:2px solid var(--green);
+  border-radius:14px;padding:26px 26px 24px;
+}
+.action h3{font-family:var(--display);font-size:1.375rem;margin-bottom:12px;line-height:1.25}
+.action p{color:var(--muted);font-size:.9375rem;line-height:1.68}
+.next{
+  margin-top:18px;padding:16px 18px;
+  background:var(--surface-2);border-radius:10px;
+  font-size:.9063rem;line-height:1.6;color:var(--paper);
+}
+.next b{display:block;font-weight:600;font-size:.8125rem;color:var(--muted);margin-bottom:6px}
+
+/* ---------- table ---------- */
+.tablewrap{
+  border:1px solid var(--line);border-radius:14px;
+  background:var(--surface);overflow-x:auto;
+}
+table{width:100%;border-collapse:collapse;min-width:660px}
+th,td{padding:15px 18px;text-align:right;font-size:.875rem;white-space:nowrap}
+th{
+  color:var(--muted);font-weight:500;font-size:.8125rem;
+  border-bottom:1px solid var(--line);
+}
+th:first-child,td:first-child{text-align:left;white-space:normal;min-width:230px}
+td{border-bottom:1px solid var(--line-soft);font-variant-numeric:tabular-nums}
+tbody tr:last-child td{border-bottom:none}
+tr.total td{font-weight:600;background:rgba(158,163,194,.05);border-top:1px solid var(--line)}
+td.hi{color:var(--green);font-weight:600}
+
+.notice{
+  display:flex;gap:12px;align-items:flex-start;
+  border:1px solid rgba(97,214,97,.25);
+  background:rgba(97,214,97,.06);
+  border-radius:12px;padding:16px 18px;margin-bottom:16px;
+  font-size:.875rem;line-height:1.6;color:var(--paper);
+}
+.notice .dot{
+  flex:none;width:7px;height:7px;border-radius:50%;
+  background:var(--green);margin-top:8px;
+}
+.notice span{color:var(--muted)}
+
+/* ---------- method ---------- */
+.method{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+}
+.method div{
+  border-top:1px solid var(--line);padding-top:16px;
+}
+.method h3{font-family:var(--body);font-size:.9375rem;font-weight:600;margin-bottom:6px}
+.method p{color:var(--muted);font-size:.875rem;line-height:1.6}
+
+/* ---------- footer ---------- */
+footer{
+  margin-top:clamp(56px,7vw,88px);
+  border-top:1px solid var(--line);
+  padding:28px 0 56px;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:20px;flex-wrap:wrap;
+  font-size:.8125rem;color:var(--muted);
+}
+footer img{height:20px;width:auto;opacity:.85}
+
+/* ---------- responsive ---------- */
+@media (max-width:820px){
+  .grid-2,.stats,.method{grid-template-columns:1fr}
+  .stats{border-radius:14px}
+  .aud{grid-template-columns:1fr auto;gap:8px 16px}
+  .aud .bar{grid-column:1 / -1;order:3}
+  .aud-val{order:2}
+  .frow{grid-template-columns:1fr 46px}
+  .frow .fbar{grid-column:1 / -1;order:3;margin-top:6px}
+  .masthead .doc{text-align:left}
+}
+
+@media print{
+  body{background:#fff;color:#191921}
+  .wrap{max-width:none}
+  section{padding-top:32px;break-inside:avoid}
+  .card,.action,.friction,.tablewrap,.stat{break-inside:avoid}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ================= v2 additions ================= */
+:root{--blue:#8ea2ff;--blue-dim:rgba(142,162,255,.14)}
+
+/* app chrome */
+.appbar{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  padding:18px 0;border-bottom:1px solid var(--line);
+}
+.appbar .left{display:flex;align-items:center;gap:14px;min-width:0}
+.appbar img{height:22px;width:auto;display:block}
+.crumbs{font-size:.8125rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.crumbs b{color:var(--paper);font-weight:500}
+.appbar .right{display:flex;gap:8px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font:600 .8125rem/1 var(--body);padding:10px 14px;border-radius:9px;
+  border:1px solid var(--line);background:var(--surface);color:var(--paper);cursor:pointer;
+  text-decoration:none;
+}
+.btn:hover{border-color:rgba(158,163,194,.35)}
+.btn.primary{background:var(--green);border-color:var(--green);color:#0e0e0e}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn svg{width:14px;height:14px}
+.meta{display:flex;gap:18px;flex-wrap:wrap;font-size:.8125rem;color:var(--muted);margin-bottom:18px}
+.meta span{display:inline-flex;align-items:center;gap:6px}
+.meta i{width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block}
+.stats.four{grid-template-columns:repeat(4,1fr)}
+.act-foot{margin-top:18px}
+.cta-row{display:flex;justify-content:center;margin-top:22px}
+
+/* sample-data flag (mockup only) */
+.sample{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.75rem;color:var(--blue);background:var(--blue-dim);
+  border:1px dashed rgba(142,162,255,.45);border-radius:999px;padding:5px 11px;margin-bottom:18px;
+}
+
+/* competitive: chips */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+.chip{
+  display:flex;align-items:center;gap:10px;background:var(--surface);
+  border:1px solid var(--line);border-radius:999px;padding:8px 14px 8px 10px;font-size:.875rem;font-weight:600;
+}
+.chip small{font-weight:400;color:var(--muted);font-size:.75rem}
+.chip .av{
+  width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
+  font-size:.6875rem;font-weight:700;background:var(--surface-2);color:var(--muted);border:1px solid var(--line);
+}
+.chip.you{border-color:rgba(97,214,97,.45)}
+.chip.you .av{background:var(--green-dim);color:var(--green);border-color:rgba(97,214,97,.4)}
+
+.comp-top{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px}
+.map{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 20px 12px}
+.map h3,.panel h3{font-family:var(--body);font-weight:600;font-size:1.0625rem;margin-bottom:4px}
+.map .sub,.panel .sub{color:var(--muted);font-size:.8438rem;margin-bottom:10px}
+.map svg{width:100%;height:auto;display:block}
+.map svg text{font-family:var(--body)}
+.pt{cursor:default}
+.pt circle{transition:r .15s}
+.pt:hover circle.dot{r:9}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.readout{display:flex;flex-direction:column;gap:16px;margin-top:6px}
+.readout div{border-top:1px solid var(--line-soft);padding-top:14px}
+.readout div:first-child{border-top:none;padding-top:0}
+.readout b{display:block;font-size:.9063rem;margin-bottom:4px}
+.readout p{color:var(--muted);font-size:.8594rem;line-height:1.6}
+
+/* matrix */
+.matrix{margin-top:16px}
+.matrix table{min-width:860px}
+.matrix th,.matrix td{text-align:left;white-space:normal;vertical-align:middle}
+.matrix th:first-child,.matrix td:first-child{min-width:190px}
+.matrix th.c,.matrix td.c{text-align:center}
+.matrix td .firm{font-weight:600}
+.matrix td .type{display:block;color:var(--muted);font-size:.75rem;margin-top:2px}
+.matrix tr.you td{background:rgba(97,214,97,.05)}
+.matrix tr.you td:first-child{box-shadow:inset 2px 0 0 var(--green)}
+.matrix tr.divider td{padding:8px 18px;font-size:.6875rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:rgba(158,163,194,.04)}
+.rate{display:inline-flex;flex-direction:column;align-items:center;gap:5px;font-size:.6875rem;color:var(--muted)}
+.rate i{width:14px;height:14px;border-radius:50%;display:block;border:2px solid currentColor}
+.rate.s{color:var(--green)} .rate.s i{background:var(--green)}
+.rate.p{color:var(--muted)} .rate.p i{background:linear-gradient(90deg,var(--muted) 50%,transparent 50%)}
+.rate.w{color:var(--amber)} .rate.w i{background:transparent}
+.rate span{color:var(--muted)}
+.rate[data-ev]{cursor:help}
+.threat{display:inline-block;font-size:.75rem;font-weight:600;padding:4px 10px;border-radius:999px}
+.threat.h{background:var(--amber-dim);color:var(--amber)}
+.threat.m{background:rgba(158,163,194,.12);color:var(--paper)}
+.threat.l{background:rgba(158,163,194,.06);color:var(--muted)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:.75rem;color:var(--muted);padding:12px 18px;border-top:1px solid var(--line)}
+.legend .rate{flex-direction:row}
+.win3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.win3 .card h3{font-size:.9688rem}
+.kicker{font-size:.6875rem;letter-spacing:.07em;text-transform:uppercase;font-weight:600;margin-bottom:10px;display:block}
+.kicker.g{color:var(--green)} .kicker.a{color:var(--amber)} .kicker.b{color:var(--blue)}
+
+/* benchmarks */
+.bench{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px 24px}
+.brow{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,1.7fr) 150px;gap:24px;align-items:center;
+  padding:20px 0;border-bottom:1px solid var(--line-soft);
+}
+.brow:last-child{border-bottom:none}
+.brow .who b{display:block;font-size:.9375rem}
+.brow .who span{display:block;color:var(--muted);font-size:.8125rem;margin-top:2px}
+.track{position:relative;height:36px}
+.track .rail{position:absolute;left:0;right:0;top:17px;height:2px;background:rgba(158,163,194,.16);border-radius:1px}
+.track .iqr{position:absolute;top:11px;height:14px;background:rgba(158,163,194,.20);border-radius:4px}
+.track .med{position:absolute;top:6px;width:2px;height:24px;background:var(--paper);opacity:.75;border-radius:1px}
+.track .me{
+  position:absolute;top:10px;width:16px;height:16px;margin-left:-8px;border-radius:50%;
+  background:var(--green);box-shadow:0 0 0 3px var(--surface);
+}
+.track .me em{
+  position:absolute;bottom:22px;left:50%;transform:translateX(-50%);font-style:normal;
+  font-size:.75rem;font-weight:600;color:var(--paper);white-space:nowrap;
+}
+.axis{position:relative;height:16px;font-size:.6875rem;color:var(--muted);margin-top:2px}
+.axis span{position:absolute;transform:translateX(-50%)}
+.rank{text-align:right}
+.rank .big{font-family:var(--display);font-size:1.5rem;line-height:1.1}
+.rank .big.up{color:var(--green)}
+.rank .big.dn{color:var(--amber)}
+.rank small{display:block;color:var(--muted);font-size:.75rem;margin-top:3px}
+.bench-key{display:flex;gap:20px;flex-wrap:wrap;font-size:.75rem;color:var(--muted);margin:12px 2px 0}
+.bench-key span{display:inline-flex;align-items:center;gap:7px}
+.bench-key i{display:inline-block}
+.why{
+  margin-top:16px;padding:18px 20px;border-radius:12px;background:var(--surface-2);
+  border-left:2px solid var(--green);font-size:.9063rem;line-height:1.65;
+}
+.why b{color:var(--paper)}
+.why span{color:var(--muted)}
+
+.hist{display:flex;align-items:flex-end;gap:2px;height:150px;margin-top:18px;padding-bottom:0;border-bottom:1px solid var(--line)}
+.hist div{flex:1;background:rgba(158,163,194,.28);border-radius:4px 4px 0 0;position:relative;cursor:default}
+.hist div:hover{background:rgba(158,163,194,.45)}
+.hist div.me{background:var(--green)}
+.hist div.me:hover{background:var(--green)}
+.hist div .tip{
+  display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  background:#2a2a36;border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:.75rem;
+  white-space:nowrap;color:var(--paper);z-index:3;
+}
+.hist div:hover .tip{display:block}
+.hist-x{display:flex;gap:2px;font-size:.6875rem;color:var(--muted);margin-top:6px}
+.hist-x span{flex:1;text-align:center}
+.hist-note{font-size:.8125rem;color:var(--muted);margin-top:12px}
+.hist-note b{color:var(--green)}
+
+.vs{display:flex;flex-direction:column;margin-top:10px}
+.vs-row{display:grid;grid-template-columns:minmax(0,1fr) 64px 64px 70px;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line-soft);font-size:.875rem;font-variant-numeric:tabular-nums}
+.vs-row:last-child{border-bottom:none}
+.vs-row.h{font-size:.75rem;color:var(--muted);padding-top:0}
+.vs-row div:not(:first-child){text-align:right}
+.delta{font-weight:600}
+.delta.up{color:var(--green)} .delta.dn{color:var(--amber)}
+
+.dumb{margin-top:6px}
+.drow{display:grid;grid-template-columns:minmax(0,1fr) minmax(200px,1.4fr) 90px;gap:22px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line-soft)}
+.drow:last-child{border-bottom:none}
+.drow .lbl{font-size:.875rem}
+.drow .lbl em{font-style:normal;color:var(--muted);display:block;font-size:.8125rem;margin-top:2px}
+.dtrack{position:relative;height:22px}
+.dtrack .rail{position:absolute;left:0;right:0;top:10px;height:2px;background:rgba(158,163,194,.14)}
+.dtrack .span{position:absolute;top:7px;height:8px;background:var(--amber);opacity:.85;border-radius:4px}
+.dtrack .peer{position:absolute;top:3px;width:2px;height:16px;background:var(--paper);opacity:.75;margin-left:-1px}
+.drow .x{text-align:right;font-family:var(--display);font-size:1.25rem;color:var(--amber)}
+.drow .x small{display:block;font-family:var(--body);font-size:.6875rem;color:var(--muted)}
+
+.lift{
+  display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px;align-items:center;
+  background:linear-gradient(135deg,rgba(97,214,97,.10),rgba(97,214,97,.02));
+  border:1px solid rgba(97,214,97,.3);border-radius:14px;padding:26px;margin-top:16px;
+}
+.lift h3{font-family:var(--display);font-size:1.375rem;line-height:1.25;margin-bottom:10px}
+.lift p{color:var(--muted);font-size:.9063rem;line-height:1.65}
+.lift p b{color:var(--paper)}
+.proj{display:flex;align-items:center;gap:14px;justify-content:center}
+.proj .n{font-family:var(--display);font-size:2.4rem;line-height:1}
+.proj .n small{display:block;font-family:var(--body);font-size:.75rem;color:var(--muted);margin-top:6px;text-align:center}
+.proj .n.to{color:var(--green)}
+.proj .arrow{color:var(--muted);font-size:1.5rem}
+.fine{font-size:.75rem;color:var(--muted);margin-top:16px;line-height:1.6;max-width:90ch}
+
+@media (max-width:820px){
+  .stats.four{grid-template-columns:1fr 1fr}
+  .comp-top,.win3,.lift{grid-template-columns:1fr}
+  .brow{grid-template-columns:1fr auto;gap:10px 16px}
+  .brow .tr{grid-column:1 / -1;order:3}
+  .drow{grid-template-columns:1fr 80px}
+  .drow .dtrack{grid-column:1 / -1;order:3}
+  .crumbs{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="appbar">
+    <div class="left"><img src="data:image/png;base64,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" alt="Viable"><span class="crumbs">Tests / <b>Nimble Gravity – Live Page Test</b></span></div>
+    <div class="right">
+      <a class="btn" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Duplicate test</a>
+      <a class="btn primary" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>Share</a>
+    </div>
+  </header>
+
+  <div class="verdict">
+    <div class="meta"><span><i></i>Live page test</span><span>Launched Sep 17, 2026</span><span>4,000 simulated users</span><span>4 audiences</span></div>
+    <p class="client">Test subject: <b>Applied Anthropic Practice landing page</b>, evaluated against four enterprise buyer audiences</p>
+    <h1>The page sells Claude. Executives are buying production.</h1>
+    <p class="lede">
+      The strongest audience reached a <b>2.1% simulated conversion rate</b>, which puts the page in the medium demand band.
+      The line that converts is the end-to-end promise of moving from first idea to production. The framing that costs you
+      is the vendor-first packaging around it, which narrows the page to buyers who have already chosen Claude.
+    </p>
+
+    <div class="scale" role="img" aria-label="Viability rating: medium, the middle of three bands">
+      <div class="scale-track">
+        <div class="scale-seg"></div>
+        <div class="scale-seg on"></div>
+        <div class="scale-seg"></div>
+      </div>
+      <div class="scale-labels">
+        <span>Low</span><span class="now">Medium viability</span><span>High</span>
+      </div>
+    </div>
+
+    <div class="stats four">
+      <div class="stat">
+        <div class="fig">2.1%</div>
+        <div class="cap">Best simulated conversion rate, from Chief AI Officers</div>
+      </div>
+      <div class="stat">
+        <div class="fig">21 to 28%</div>
+        <div class="cap">Cited the generic "Get In Touch" ask, in all four audiences</div>
+      </div>
+      <div class="stat">
+        <div class="fig">34%</div>
+        <div class="cap">Of CFOs said the page reads as technical enablement rather than finance outcomes</div>
+      </div>
+      <div class="stat">
+        <div class="fig" style="color:var(--green)">Top 28%</div>
+        <div class="cap">Against 312 similar tests in Viable. <a href="#benchmarks">See benchmarks</a></div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="sec-head">
+      <h2>How each audience responded</h2>
+      <p>Simulated conversion rate is the share of an audience that clicks a call to action after seeing the page. Each audience was modeled against 1,000 landing page views, for 4,000 simulated users in total.</p>
+    </div>
+
+    <div class="aud-list">
+      <div class="aud">
+        <div class="aud-name">Chief AI Officer
+          <span class="aud-note">Best message fit at 6.2 out of 10. Owns the mandate to move pilots into production.</span>
+        </div>
+        <div class="bar"><i class="lead" style="width:100%"></i></div>
+        <div class="aud-val">2.1%</div>
+      </div>
+      <div class="aud">
+        <div class="aud-name">VP of Engineering
+          <span class="aud-note">Effectively level with the Chief AI Officer, and the most resistant to vendor-first framing.</span>
+        </div>
+        <div class="bar"><i style="width:95.2%"></i></div>
+        <div class="aud-val">2.0%</div>
+      </div>
+      <div class="aud">
+        <div class="aud-name">CFO
+          <span class="aud-note">Reads the page as a technical document rather than a business case.</span>
+        </div>
+        <div class="bar"><i style="width:71.4%"></i></div>
+        <div class="aud-val">1.5%</div>
+      </div>
+      <div class="aud">
+        <div class="aud-name">CIO
+          <span class="aud-note">Lowest rate despite a 5.3 out of 10 fit score. Loses them above the fold.</span>
+        </div>
+        <div class="bar"><i style="width:47.6%"></i></div>
+        <div class="aud-val">1.0%</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="benchmarks">
+    <div class="sec-head">
+      <h2>How this test compares</h2>
+      <p>A 2.1% conversion rate only means something next to a reference point. Here it is against three: your own tests, tests like this one, and every test run in Viable.</p>
+    </div>
+
+    <div class="sample">Mockup: all benchmark figures on this section are placeholder data</div>
+
+    <div class="bench">
+      <div class="brow">
+        <div class="who"><b>Your tests</b><span>5 tests by Nimble Gravity since June 2026</span></div>
+        <div class="tr">
+          <div class="track" aria-label="Your tests: middle half 1.2 to 1.8%, median 1.6%, this test 2.1%">
+            <div class="rail"></div>
+            <div class="iqr" style="left:20%;width:10%"></div>
+            <div class="med" style="left:26.7%"></div>
+            <div class="me" style="left:35%"><em>2.1%</em></div>
+          </div>
+        </div>
+        <div class="rank"><div class="big up">Best of 5</div><small>+0.5 pts over your median</small></div>
+      </div>
+      <div class="brow">
+        <div class="who"><b>Similar tests</b><span>312 live page tests: B2B services, C-suite audiences</span></div>
+        <div class="tr">
+          <div class="track" aria-label="Similar tests: middle half 0.9 to 2.2%, median 1.4%, this test 2.1%">
+            <div class="rail"></div>
+            <div class="iqr" style="left:15%;width:21.7%"></div>
+            <div class="med" style="left:23.3%"></div>
+            <div class="me" style="left:35%"><em>2.1%</em></div>
+          </div>
+        </div>
+        <div class="rank"><div class="big up">Top 28%</div><small>72nd percentile of peers</small></div>
+      </div>
+      <div class="brow">
+        <div class="who"><b>All Viable tests</b><span>9,840 tests across every category</span></div>
+        <div class="tr">
+          <div class="track" aria-label="All Viable tests: middle half 1.3 to 3.9%, median 2.4%, this test 2.1%">
+            <div class="rail"></div>
+            <div class="iqr" style="left:21.7%;width:43.3%"></div>
+            <div class="med" style="left:40%"></div>
+            <div class="me" style="left:35%"><em>2.1%</em></div>
+          </div>
+          <div class="axis"><span style="left:0%;transform:none">0%</span><span style="left:16.7%">1%</span><span style="left:33.3%">2%</span><span style="left:50%">3%</span><span style="left:66.7%">4%</span><span style="left:83.3%">5%</span><span style="left:100%;transform:translateX(-100%)">6%</span></div>
+        </div>
+        <div class="rank"><div class="big dn">41st pct</div><small>−0.3 pts under the median</small></div>
+      </div>
+    </div>
+    <div class="bench-key">
+      <span><i style="width:10px;height:10px;border-radius:50%;background:var(--green)"></i>This test (best audience)</span>
+      <span><i style="width:2px;height:12px;background:var(--paper);opacity:.75"></i>Median</span>
+      <span><i style="width:18px;height:8px;border-radius:3px;background:rgba(158,163,194,.28)"></i>Middle half of tests</span>
+    </div>
+
+    <div class="why">
+      <b>Why the three ranks disagree.</b>
+      <span>The all-Viable set includes consumer and self-serve offers where a click costs the visitor nothing. An executive weighing a six-figure engagement behaves differently, so the peer set is the fair comparison. Against its peers, this page is already in the top third. The work ahead is converting more of the interest it creates, not creating more.</span>
+    </div>
+
+    <div class="grid-2" style="margin-top:16px">
+      <div class="panel">
+        <h3>Where you land among similar tests</h3>
+        <p class="sub">312 B2B services tests with C-suite audiences, by best-audience conversion rate.</p>
+        <div class="hist" role="img" aria-label="Histogram of peer conversion rates. Most peers fall between 1 and 1.5 percent. This test falls in the 2 to 2.5 percent bin.">
+          <div style="height:15.9%"><span class="tip">0–0.5%: 14 tests</span></div>
+          <div style="height:59.1%"><span class="tip">0.5–1%: 52 tests</span></div>
+          <div style="height:100%"><span class="tip">1–1.5%: 88 tests (most common)</span></div>
+          <div style="height:72.7%"><span class="tip">1.5–2%: 64 tests</span></div>
+          <div class="me" style="height:46.6%"><span class="tip">2–2.5%: 41 tests, including this one</span></div>
+          <div style="height:29.5%"><span class="tip">2.5–3%: 26 tests</span></div>
+          <div style="height:15.9%"><span class="tip">3–3.5%: 14 tests</span></div>
+          <div style="height:9.1%"><span class="tip">3.5–4%: 8 tests</span></div>
+          <div style="height:5.7%"><span class="tip">4%+: 5 tests</span></div>
+        </div>
+        <div class="hist-x"><span>0</span><span>0.5</span><span>1</span><span>1.5</span><span>2</span><span>2.5</span><span>3</span><span>3.5</span><span>4+</span></div>
+        <p class="hist-note"><b>This test</b> sits in the 2 to 2.5% band. Pages in the top 10% of peers clear 3.1%.</p>
+      </div>
+
+      <div class="panel">
+        <h3>Each audience against its role benchmark</h3>
+        <p class="sub">Median conversion for that job title across every Viable test that targeted it.</p>
+        <div class="vs">
+          <div class="vs-row h"><div>Audience</div><div>This test</div><div>Role median</div><div>Difference</div></div>
+          <div class="vs-row"><div>Chief AI Officer</div><div>2.1%</div><div>1.6%</div><div class="delta up">+0.5</div></div>
+          <div class="vs-row"><div>CFO</div><div>1.5%</div><div>1.1%</div><div class="delta up">+0.4</div></div>
+          <div class="vs-row"><div>VP of Engineering</div><div>2.0%</div><div>1.8%</div><div class="delta up">+0.2</div></div>
+          <div class="vs-row"><div>CIO</div><div>1.0%</div><div>1.5%</div><div class="delta dn">−0.5</div></div>
+        </div>
+        <p class="hist-note" style="margin-top:14px">The CIO is the only audience under its benchmark, which lines up with the above-the-fold clarity problem this test found.</p>
+      </div>
+    </div>
+
+    <div class="reasons">
+      <h3>Is this friction normal?</h3>
+      <p class="sub">How often each objection shows up here, against how often it shows up in similar tests.</p>
+      <div class="dumb">
+        <div class="drow">
+          <div class="lbl">Vendor or tool-first framing <em>19 to 22% here, 8% for peers</em></div>
+          <div class="dtrack"><div class="rail"></div><div class="span" style="left:47.5%;width:7.5%"></div><div class="peer" style="left:20%"></div></div>
+          <div class="x">2.6×<small>typical</small></div>
+        </div>
+        <div class="drow">
+          <div class="lbl">Call to action doesn't say what happens next <em>21 to 28% here, 11% for peers</em></div>
+          <div class="dtrack"><div class="rail"></div><div class="span" style="left:52.5%;width:17.5%"></div><div class="peer" style="left:27.5%"></div></div>
+          <div class="x">2.2×<small>typical</small></div>
+        </div>
+        <div class="drow">
+          <div class="lbl">Opening message unclear <em>CIO: 26% here, 15% for peers</em></div>
+          <div class="dtrack"><div class="rail"></div><div class="span" style="left:64%;width:1.5%"></div><div class="peer" style="left:37.5%"></div></div>
+          <div class="x">1.7×<small>typical</small></div>
+        </div>
+        <div class="drow">
+          <div class="lbl">Reads technical, not business <em>CFO: 34% here, 22% for peers</em></div>
+          <div class="dtrack"><div class="rail"></div><div class="span" style="left:84%;width:1.5%"></div><div class="peer" style="left:55%"></div></div>
+          <div class="x">1.5×<small>typical</small></div>
+        </div>
+      </div>
+      <div class="bench-key" style="margin-top:14px">
+        <span><i style="width:18px;height:8px;border-radius:3px;background:var(--amber)"></i>This test</span>
+        <span><i style="width:2px;height:12px;background:var(--paper);opacity:.75"></i>Peer median</span>
+        <span>Scale 0 to 40% of non-converters</span>
+      </div>
+    </div>
+
+    <div class="lift">
+      <div>
+        <span class="kicker g">What happened when others fixed it</span>
+        <h3>Peers who replaced a generic contact button gained a median 41%</h3>
+        <p><b>64 similar tests</b> were re-run after swapping "Contact us" or "Get In Touch" for a named, time-boxed first step. The median retest lifted conversion by 41%, with the middle half landing between +18% and +66%.</p>
+        <div class="act-foot"><a class="btn" href="#">Duplicate test and modify →</a></div>
+      </div>
+      <div class="proj" aria-label="Applied to your best audience: 2.1% today to about 3.0% projected">
+        <div class="n">2.1%<small>Today</small></div>
+        <div class="arrow">→</div>
+        <div class="n to">~3.0%<small>At median lift</small></div>
+      </div>
+    </div>
+
+    <p class="fine">Benchmarks compare best-audience conversion rate to best-audience conversion rate. Similar tests share this test's type (live page), industry (B2B professional services) and audience seniority (C-suite and VP). Benchmarks draw on anonymized, aggregated results. No other customer's page or data is identifiable, and any comparison group under 30 tests is hidden.</p>
+  </section>
+
+
+  <section>
+    <div class="sec-head">
+      <h2>What the page is doing well</h2>
+      <p>Signals worth protecting through any rewrite.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card win">
+        <h3>"First idea to production" is your strongest line</h3>
+        <p><b>34% of converting Chief AI Officers</b> named the end-to-end delivery promise as their reason for acting. That
+        is the single highest conversion driver in the test. It works because it speaks to the one thing this buyer is
+        accountable for, which is getting past the pilot stage, and it says nothing about which model gets them there.</p>
+      </div>
+      <div class="card win">
+        <h3>Governance detail converts rather than reassures</h3>
+        <p><b>27% of converting Chief AI Officers</b> cited the enterprise rollout specifics: SSO, RBAC, and governance
+        configuration. For a regulated-industry buyer these are not compliance footnotes, they are proof that you have done
+        this before. They are currently positioned as bullet points inside a track description rather than as a headline
+        claim.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>What is holding it back</h2>
+      <p>Four issues account for most of the simulated non-conversions. The first appears in every audience, and the second is structural rather than cosmetic.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card risk">
+        <h3>"Get In Touch" appears in every audience's objections</h3>
+        <p>The most consistent finding in the test: <b>28% of Chief AI Officers, 26% of VP Engineering, 21% of CIOs, and
+        21% of CFOs</b>. The page never says what the first conversation is. Buyers could not tell whether they were
+        booking a call, a workshop, or an assessment, how long it takes, or what they receive at the end. Interested
+        executives defer rather than decline.</p>
+      </div>
+      <div class="card risk">
+        <h3>Claude-first framing narrows the funnel</h3>
+        <p>Vendor specificity was a stated non-conversion driver for <b>22% of VP Engineering, 21% of Chief AI Officers,
+        and 19% of CIOs</b>. "Starting with Claude," "Building with Claude," and the Anthropic-led framing make the page
+        self-select for buyers who have already picked a model. Executives still choosing between approaches read it as a
+        product page rather than a transformation partner, and leave.</p>
+      </div>
+      <div class="card risk">
+        <h3>The CFO reads this as a technical document</h3>
+        <p><b>34% of CFO non-converters</b> said the page reads like technical enablement rather than finance outcomes.
+        Nothing on the page is denominated in cost, return, or risk. In an enterprise AI engagement the CFO is rarely the
+        champion, but they sign, and right now the page gives them nothing to sign for.</p>
+      </div>
+      <div class="card risk">
+        <h3>CIOs are lost above the fold</h3>
+        <p>The CIO had the lowest rate in the test despite a reasonable 5.3 out of 10 fit score, and <b>26% called the
+        opening message ambiguous</b>, pointing at "built different built to deliver" and at empty heading artifacts on the
+        page. With bounce around 21%, the drop-off happens before anyone reaches the lower-page proof: the 250+ senior
+        architects, the Fortune 500 track record, and the platform detail.</p>
+      </div>
+    </div>
+
+    <div class="reasons">
+      <h3>Share of each audience's non-converters citing this reason</h3>
+      <p class="sub">Read by audience, since each issue concentrates in a different executive.</p>
+      <div class="frow">
+        <div class="lbl">Reads as technical enablement, not finance outcomes <em>CFO</em></div>
+        <div class="fbar"><i style="width:100%"></i></div>
+        <div class="pct">34%</div>
+      </div>
+      <div class="frow">
+        <div class="lbl">"Get In Touch" does not say what happens next <em>Chief AI Officer</em></div>
+        <div class="fbar"><i style="width:82.4%"></i></div>
+        <div class="pct">28%</div>
+      </div>
+      <div class="frow">
+        <div class="lbl">"Get In Touch" does not say what happens next <em>VP Engineering</em></div>
+        <div class="fbar"><i style="width:76.5%"></i></div>
+        <div class="pct">26%</div>
+      </div>
+      <div class="frow">
+        <div class="lbl">Opening message ambiguous or awkward <em>CIO</em></div>
+        <div class="fbar"><i style="width:76.5%"></i></div>
+        <div class="pct">26%</div>
+      </div>
+      <div class="frow">
+        <div class="lbl">Claude-first framing narrows perceived fit <em>VP Engineering</em></div>
+        <div class="fbar"><i style="width:64.7%"></i></div>
+        <div class="pct">22%</div>
+      </div>
+      <div class="frow">
+        <div class="lbl">Claude-first framing narrows perceived fit <em>Chief AI Officer</em></div>
+        <div class="fbar"><i style="width:61.8%"></i></div>
+        <div class="pct">21%</div>
+      </div>
+      <div class="frow">
+        <div class="lbl">"Get In Touch" does not say what happens next <em>CIO</em></div>
+        <div class="fbar"><i style="width:61.8%"></i></div>
+        <div class="pct">21%</div>
+      </div>
+      <div class="frow">
+        <div class="lbl">"Get In Touch" does not say what happens next <em>CFO</em></div>
+        <div class="fbar"><i style="width:61.8%"></i></div>
+        <div class="pct">21%</div>
+      </div>
+      <div class="frow">
+        <div class="lbl">Claude-first framing narrows perceived fit <em>CIO</em></div>
+        <div class="fbar"><i style="width:55.9%"></i></div>
+        <div class="pct">19%</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="competitive">
+    <div class="sec-head">
+      <h2>The competitive set</h2>
+      <p>Five firms tracked for this practice. Each one is rated on the same four things this test found friction on, so you can see which objections are yours alone and which are table stakes in the category.</p>
+    </div>
+
+    <div class="sample">Mockup: competitor ratings and map positions are placeholder data</div>
+
+    <div class="chips">
+      <div class="chip you"><span class="av">NG</span>Nimble Gravity <small>You</small></div>
+      <div class="chip"><span class="av">D</span>Deloitte <small>Incumbent on retainer</small></div>
+      <div class="chip"><span class="av">S</span>Slalom <small>Closest US consulting peer</small></div>
+      <div class="chip"><span class="av">O</span>Ode with Anthropic <small>Anthropic's own services venture</small></div>
+      <div class="chip"><span class="av">DA</span>Distyl AI <small>AI-native, financial services</small></div>
+      <div class="chip"><span class="av">T</span>Tribe AI <small>AI-native boutique</small></div>
+    </div>
+
+    <div class="comp-top">
+      <div class="map">
+        <h3>Where each firm is positioned</h3>
+        <p class="sub">Model stance on one axis, delivery scale on the other. Hover a point for detail.</p>
+        <svg viewBox="0 0 560 400" role="img" aria-label="Positioning map. Nimble Gravity sits in the single-model half next to Ode with Anthropic. Deloitte, Slalom, Distyl AI and Tribe AI sit in the model-agnostic half.">
+          <!-- quadrant tint -->
+          <rect x="290" y="20" width="250" height="340" fill="rgba(158,163,194,.035)"/>
+          <!-- axes -->
+          <line x1="40" y1="190" x2="540" y2="190" stroke="rgba(158,163,194,.28)" stroke-width="1"/>
+          <line x1="290" y1="20" x2="290" y2="360" stroke="rgba(158,163,194,.28)" stroke-width="1"/>
+          <!-- axis labels -->
+          <text x="40" y="386" font-size="11" fill="#9ea3c2">← Single-model</text>
+          <text x="540" y="386" font-size="11" fill="#9ea3c2" text-anchor="end">Model-agnostic →</text>
+          <text x="296" y="32" font-size="11" fill="#9ea3c2">Enterprise scale</text>
+          <text x="296" y="354" font-size="11" fill="#9ea3c2">AI-native boutique</text>
+          <!-- quadrant names -->
+          <text x="530" y="178" font-size="10" fill="rgba(158,163,194,.55)" text-anchor="end" letter-spacing=".06em">COMPETING FOR THE MODEL DECISION</text>
+          <text x="50" y="178" font-size="10" fill="rgba(158,163,194,.55)" letter-spacing=".06em">MODEL ALREADY CHOSEN</text>
+
+          <!-- recommended move -->
+          <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#61d661"/></marker></defs>
+          <line x1="164" y1="212" x2="312" y2="222" stroke="#61d661" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#ah)"/>
+          <circle cx="330" cy="224" r="13" fill="none" stroke="#61d661" stroke-width="2" stroke-dasharray="3 4"/>
+          <text x="330" y="256" font-size="11" fill="#61d661" text-anchor="middle">Outcome-first framing</text>
+
+          <g class="pt"><title>Deloitte: model-agnostic, largest delivery scale, already on retainer at many target accounts.</title>
+            <circle class="dot" cx="480" cy="60" r="7" fill="#f3f5f7" stroke="#191921" stroke-width="2"/><text x="468" y="64" font-size="12" fill="#f3f5f7" text-anchor="end">Deloitte</text></g>
+          <g class="pt"><title>Slalom: model-agnostic, mid-to-large scale consulting.</title>
+            <circle class="dot" cx="420" cy="118" r="7" fill="#f3f5f7" stroke="#191921" stroke-width="2"/><text x="408" y="122" font-size="12" fill="#f3f5f7" text-anchor="end">Slalom</text></g>
+          <g class="pt"><title>Distyl AI: AI-native, largely model-agnostic, deep in financial services.</title>
+            <circle class="dot" cx="400" cy="268" r="7" fill="#f3f5f7" stroke="#191921" stroke-width="2"/><text x="412" y="272" font-size="12" fill="#f3f5f7">Distyl AI</text></g>
+          <g class="pt"><title>Tribe AI: AI-native boutique, model-agnostic talent network.</title>
+            <circle class="dot" cx="470" cy="318" r="7" fill="#f3f5f7" stroke="#191921" stroke-width="2"/><text x="458" y="322" font-size="12" fill="#f3f5f7" text-anchor="end">Tribe AI</text></g>
+          <g class="pt"><title>Ode with Anthropic: Claude-only by definition. The nearest neighbor to your current page.</title>
+            <circle class="dot" cx="90" cy="150" r="7" fill="#f3f5f7" stroke="#191921" stroke-width="2"/><text x="102" y="154" font-size="12" fill="#f3f5f7">Ode with Anthropic</text></g>
+          <g class="pt"><title>Nimble Gravity today: the page reads as Claude-first (19 to 22% of three audiences objected).</title>
+            <circle class="dot" cx="150" cy="210" r="9" fill="#61d661" stroke="#191921" stroke-width="2"/><text x="150" y="236" font-size="12" font-weight="600" fill="#61d661" text-anchor="middle">You today</text></g>
+        </svg>
+      </div>
+
+      <div class="panel">
+        <h3>What the map shows</h3>
+        <p class="sub">Three readings to take into the rewrite.</p>
+        <div class="readout">
+          <div><b>You are in the smaller half of the market</b><p>Four of five competitors compete for buyers who are still choosing an approach. The Claude-first page competes only for buyers who have already chosen.</p></div>
+          <div><b>Your nearest neighbor is Anthropic itself</b><p>In the model-committed half, a buyer comparing you to Ode with Anthropic is comparing you to the vendor's own team.</p></div>
+          <div><b>The move is sideways, not a rebrand</b><p>Leading with outcomes shifts the page right on the map while keeping the Claude depth that the agnostic firms cannot match.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tablewrap matrix">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Firm</th>
+            <th scope="col">Leads with</th>
+            <th scope="col" class="c">Model stance</th>
+            <th scope="col" class="c">Defined first step</th>
+            <th scope="col" class="c">Finance framing</th>
+            <th scope="col" class="c">Governance proof</th>
+            <th scope="col" class="c">Threat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="you">
+            <td><span class="firm">Nimble Gravity</span><span class="type">Rated from this test's results</span></td>
+            <td>Claude as the premise</td>
+            <td class="c"><span class="rate w" title="19 to 22% of VP Eng, CAIO and CIO non-converters cited vendor-first framing"><i></i>Claude-first</span></td>
+            <td class="c"><span class="rate w" title="21 to 28% of every audience cited the generic Get In Touch ask"><i></i>Weak</span></td>
+            <td class="c"><span class="rate w" title="34% of CFO non-converters said it reads as technical enablement"><i></i>Weak</span></td>
+            <td class="c"><span class="rate s" title="27% of converting Chief AI Officers cited SSO, RBAC and governance detail"><i></i>Strong</span></td>
+            <td class="c"><span class="threat l">n/a</span></td>
+          </tr>
+          <tr class="divider"><td colspan="7">Competitors</td></tr>
+          <tr>
+            <td><span class="firm">Deloitte</span><span class="type">Global consultancy</span></td>
+            <td>Enterprise transformation at scale</td>
+            <td class="c"><span class="rate s"><i></i>Agnostic</span></td>
+            <td class="c"><span class="rate p"><i></i>Partial</span></td>
+            <td class="c"><span class="rate s"><i></i>Strong</span></td>
+            <td class="c"><span class="rate s"><i></i>Strong</span></td>
+            <td class="c"><span class="threat h">High</span></td>
+          </tr>
+          <tr>
+            <td><span class="firm">Slalom</span><span class="type">US consultancy</span></td>
+            <td>Business outcomes, modern delivery</td>
+            <td class="c"><span class="rate s"><i></i>Agnostic</span></td>
+            <td class="c"><span class="rate s"><i></i>Strong</span></td>
+            <td class="c"><span class="rate p"><i></i>Partial</span></td>
+            <td class="c"><span class="rate p"><i></i>Partial</span></td>
+            <td class="c"><span class="threat h">High</span></td>
+          </tr>
+          <tr>
+            <td><span class="firm">Ode with Anthropic</span><span class="type">Vendor services venture</span></td>
+            <td>Claude, from the source</td>
+            <td class="c"><span class="rate w"><i></i>Claude-only</span></td>
+            <td class="c"><span class="rate p"><i></i>Partial</span></td>
+            <td class="c"><span class="rate p"><i></i>Partial</span></td>
+            <td class="c"><span class="rate s"><i></i>Strong</span></td>
+            <td class="c"><span class="threat h">High</span></td>
+          </tr>
+          <tr>
+            <td><span class="firm">Distyl AI</span><span class="type">AI-native firm</span></td>
+            <td>AI in production for financial services</td>
+            <td class="c"><span class="rate s"><i></i>Agnostic</span></td>
+            <td class="c"><span class="rate s"><i></i>Strong</span></td>
+            <td class="c"><span class="rate s"><i></i>Strong</span></td>
+            <td class="c"><span class="rate p"><i></i>Partial</span></td>
+            <td class="c"><span class="threat m">Medium</span></td>
+          </tr>
+          <tr>
+            <td><span class="firm">Tribe AI</span><span class="type">AI-native boutique</span></td>
+            <td>Senior AI talent, fast</td>
+            <td class="c"><span class="rate s"><i></i>Agnostic</span></td>
+            <td class="c"><span class="rate p"><i></i>Partial</span></td>
+            <td class="c"><span class="rate w"><i></i>Weak</span></td>
+            <td class="c"><span class="rate p"><i></i>Partial</span></td>
+            <td class="c"><span class="threat l">Low</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="legend">
+        <span class="rate s"><i></i><span>Strong: a buyer would not raise this objection</span></span>
+        <span class="rate p"><i></i><span>Partial</span></span>
+        <span class="rate w"><i></i><span>Weak: the objection this test measured</span></span>
+        <span>Hover your own ratings to see the test evidence behind them.</span>
+      </div>
+    </div>
+
+    <div class="win3">
+      <div class="card">
+        <span class="kicker a">Table stakes you are missing</span>
+        <h3>A named first step</h3>
+        <p>Every competitor offers at least a partial entry offer. You are the only firm asking an executive to "Get In Touch" without saying what happens next, which is why that objection shows up in all four audiences.</p>
+      </div>
+      <div class="card">
+        <span class="kicker g">Your edge, underused</span>
+        <h3>Governance proof</h3>
+        <p>Only Deloitte and Ode match your governance detail, and both are bigger, slower engagements to buy. Today it sits in bullet points. It should be a headline claim.</p>
+      </div>
+      <div class="card">
+        <span class="kicker b">The one to watch</span>
+        <h3>Ode with Anthropic</h3>
+        <p>As long as the page leads with Claude, you are shortlisted next to Anthropic's own team for the same buyer. Outcome-first framing takes you out of that head-to-head.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Recommended next steps</h2>
+      <p>Both actions are aimed at converting the demand the page is already generating, rather than finding new demand.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="action">
+        <h3>Lead with production and governance, then name Claude</h3>
+        <p>Chief AI Officers scored the highest message-audience fit at 6.2 out of 10, a measure of how closely the copy
+        matches what an audience cares about, driven by the idea-to-production promise at 34% and rollout governance at
+        27%. The same audience raised vendor specificity as an objection at 21%. Both things are true at once, and the fix
+        is sequence rather than substance.</p>
+        <div class="next">
+          <b>Next step</b>
+          Rewrite the opening to lead with production rollout and governance outcomes, then introduce Claude as one
+          implementation path rather than as the premise. Keep every Claude detail on the page. Move it below the outcome.
+        </div>
+        <div class="act-foot"><a class="btn" href="#">Duplicate test and modify →</a></div>
+      </div>
+      <div class="action">
+        <h3>Replace "Get In Touch" with a defined first step</h3>
+        <p>This is the most consistent finding in the test, appearing in all four audiences at 21% to 28%. The fix is not
+        more capability copy. It is telling an executive exactly what the first meeting is and what they walk away with.</p>
+        <div class="next">
+          <b>Next step</b>
+          Replace the button and the copy beside it with a named, time-boxed entry offer using your own language, such as
+          a four to eight week Scaling Adoption validation, stating the explicit outputs and what happens after
+          submission. While you are in there, fix the empty heading artifacts that 26% of CIOs noticed above the fold.
+        </div>
+        <div class="act-foot"><a class="btn" href="#">Duplicate test and modify →</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Supporting data</h2>
+      <p>Each row shows the projected funnel if 1,000 people from that audience saw your promotion.</p>
+    </div>
+
+    <div class="notice">
+      <span class="dot"></span>
+      <div><b>These results are simulated.</b> <span>CTA clicks show simulated intent and estimated conversions are projected
+      real-world outcomes. Run this test with real people to get real analytics about your product.</span></div>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Audience</th>
+            <th scope="col">Landing page views</th>
+            <th scope="col">CTA clicks</th>
+            <th scope="col">Est. conversions</th>
+            <th scope="col">Simulated CVR</th>
+            <th scope="col">95% range</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Chief AI Officer</td>
+            <td>1,000</td><td>21</td><td>11</td><td class="hi">2.1%</td><td>1.4 – 3.2%</td>
+          </tr>
+          <tr>
+            <td>VP of Engineering</td>
+            <td>1,000</td><td>20</td><td>10</td><td>2.0%</td><td>1.3 – 3.1%</td>
+          </tr>
+          <tr>
+            <td>CFO</td>
+            <td>1,000</td><td>15</td><td>8</td><td>1.5%</td><td>0.9 – 2.5%</td>
+          </tr>
+          <tr>
+            <td>CIO</td>
+            <td>1,000</td><td>10</td><td>8</td><td>1.0%</td><td>0.5 – 1.8%</td>
+          </tr>
+          <tr class="total">
+            <td>All audiences</td>
+            <td>4,000</td><td>66</td><td>37</td><td>1.7%</td><td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cta-row"><a class="btn primary" href="#">Run a real person test</a></div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>How to read this report</h2>
+    </div>
+    <div class="method">
+      <div>
+        <h3>What was tested</h3>
+        <p>The live Applied Anthropic Practice landing page, unchanged, run through a simulated conversion funnel against
+        four enterprise buyer audiences at 1,000 views each.</p>
+      </div>
+      <div>
+        <h3>What the numbers mean</h3>
+        <p>Simulated CVR is CTA clicks divided by landing page views, shown with a 95% interval. Message-audience fit scores
+        how closely the copy matches what an audience cares about, on a 10 point scale. Reason percentages are shares of
+        each audience's non-converters.</p>
+      </div>
+      <div>
+        <h3>What it is good for</h3>
+        <p>Directional evidence about which message and audience to back next. It is not a forecast of live conversion rate.
+        Real-person testing is the layer that produces proof.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <img src="data:image/png;base64,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" alt="Viable">
+    <div>Prepared for Nimble Gravity &nbsp;|&nbsp; September 2026 &nbsp;|&nbsp; getviable.ai</div>
+  </footer>
+
+</div>
+</body>
+</html>

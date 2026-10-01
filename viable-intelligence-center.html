@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Viable Intelligence Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single reading column for research + features, then a wide scrollable app-frame wireframe with numbered pins keyed to the feature list. */
+:root{
+  --bg:#0e0e0e; --surface:#16161c; --line:#2a2a33; --fg:#F3F5F7; --muted:#9EA3C2; --accent:#39C160; --accent-2:#61D661; --accent-ink:#0e0e0e;
+  --warn:#E0A43A; --bad:#E0605A;
+  --display:"Cal Sans","Inter",system-ui,sans-serif; --body:"Inter",system-ui,-apple-system,sans-serif; --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  /* the app wireframe is always dark, like the product */
+  --app-bg:#0f0f11; --app-panel:#17171b; --app-card:#1c1c21; --app-line:#2c2c34; --app-fg:#ECEEF2; --app-muted:#8C90A8; --app-dim:#4a4d5c;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){ :root:not([data-theme="dark"]){ --bg:#F3F5F7; --surface:#ffffff; --line:#dcdfe8; --fg:#191921; --muted:#5d6180; --accent:#23994A; --accent-2:#39C160; --accent-ink:#ffffff; --warn:#A86F0C; --bad:#C0392F; color-scheme:light } }
+:root[data-theme="light"]{ --bg:#F3F5F7; --surface:#ffffff; --line:#dcdfe8; --fg:#191921; --muted:#5d6180; --accent:#23994A; --accent-2:#39C160; --accent-ink:#ffffff; --warn:#A86F0C; --bad:#C0392F; color-scheme:light }
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:15px/1.6 var(--body);margin:0}
+.wrap{max-width:980px;margin:0 auto;padding-inline:20px;padding-block:48px 80px}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0;letter-spacing:.005em}
+h1{font-size:clamp(2rem,5vw,3rem);line-height:1.1}
+h2{font-size:1.75rem;line-height:1.2}
+h3{font-size:1.1rem;line-height:1.3}
+p{margin:0;max-width:68ch}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.lede{color:var(--muted);font-size:1.075rem;margin-top:14px}
+section{display:grid;gap:18px;margin-top:64px}
+.head{display:grid;gap:10px}
+
+/* thesis strip */
+.thesis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:36px}
+.thesis div{background:var(--surface);padding:18px 18px 20px;display:grid;gap:6px;align-content:start}
+.thesis b{font:500 13px/1.3 var(--body);color:var(--fg)}
+.thesis span{color:var(--muted);font-size:13.5px;line-height:1.5}
+@media (max-width:720px){.thesis{grid-template-columns:1fr}}
+
+/* research table */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:13.5px}
+th,td{text-align:left;vertical-align:top;padding:14px 16px;border-bottom:1px solid var(--line)}
+th{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:transparent}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+td .kind{display:block;font:400 11px/1.4 var(--mono);color:var(--muted);margin-top:3px;letter-spacing:.03em}
+td.take{color:var(--accent)}
+.note{font-size:13px;color:var(--muted)}
+
+/* whitespace callout */
+.gap{border:1px solid var(--accent);border-radius:10px;padding:20px 22px;display:grid;gap:8px;background:color-mix(in srgb,var(--accent) 7%,var(--surface))}
+
+/* features */
+.tier{display:grid;gap:12px}
+.tier-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:8px}
+.tier-h h3{font-size:1.25rem}
+.tier-h span{color:var(--muted);font-size:13.5px}
+.feats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:820px){.feats{grid-template-columns:1fr}}
+.feat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:8px;align-content:start}
+.feat .n{font:500 12px/1 var(--mono);width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink)}
+.feat p{font-size:13.5px;color:var(--muted);line-height:1.55}
+.feat .why{font-size:12.5px;color:var(--fg);border-top:1px dashed var(--line);padding-top:8px}
+.feat .why em{font-style:normal;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-right:6px}
+
+/* ============ WIREFRAME ============ */
+.frame-wrap{width:min(1242px,calc(100vw - 40px));margin-left:calc(50% - min(621px, 50vw - 20px));overflow-x:auto;border-radius:12px;border:1px solid var(--line);background:var(--app-bg)}
+.app{min-width:1200px;display:grid;grid-template-columns:200px 1fr;min-height:980px;color:var(--app-fg);font:12px/1.45 var(--body);background:var(--app-bg)}
+.side{border-right:1px solid var(--app-line);padding:16px 12px;display:flex;flex-direction:column;gap:14px;background:var(--app-bg)}
+.logo{display:flex;align-items:center;gap:7px;font:600 18px/1 var(--body);color:var(--app-fg)}
+.logo i{width:18px;height:18px;border-radius:50%;background:var(--accent-2);display:block}
+.ws{position:relative;border:1px solid var(--app-line);border-radius:6px;padding:6px 8px;color:var(--app-muted);display:flex;justify-content:space-between}
+.nav{display:grid;gap:2px}
+.nav a{padding:6px 8px;border-radius:5px;color:var(--app-muted);text-decoration:none;display:flex;justify-content:space-between;align-items:center}
+.nav a.on{background:#1a2a1f;color:var(--accent-2)}
+.nav a .new{font:500 9px/1 var(--mono);background:var(--accent-2);color:#0e0e0e;padding:3px 5px;border-radius:3px;letter-spacing:.05em}
+.nav a .ct{font:500 10px/1 var(--mono);color:var(--app-fg);background:var(--app-line);padding:3px 6px;border-radius:8px}
+.side .foot{margin-top:auto;color:var(--app-muted);display:grid;gap:10px}
+
+.main{padding:20px 22px 28px;display:grid;gap:16px;align-content:start;background:var(--app-bg)}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.top h4{margin:0;font:600 19px/1.2 var(--body)}
+.top .sub{color:var(--app-muted);margin-top:3px}
+.top .acts{display:flex;gap:8px;align-items:center}
+.btn{border:1px solid var(--app-line);border-radius:6px;padding:6px 10px;color:var(--app-fg);background:var(--app-card);white-space:nowrap}
+.btn.pri{background:var(--accent-2);border-color:var(--accent-2);color:#0e0e0e;font-weight:600}
+.btn.sm{padding:4px 8px;font-size:11px}
+.row{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:14px;align-items:stretch}
+.card{background:var(--app-panel);border:1px solid var(--app-line);border-radius:9px;padding:14px;display:grid;gap:10px;align-content:start;position:relative}
+.ch{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.ch b{font-size:13px;font-weight:600}
+.ch .meta{color:var(--app-muted);font-size:11px}
+.lbl{font:500 9.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--app-muted)}
+
+/* pins */
+.pin{position:absolute;top:-10px;left:-10px;width:22px;height:22px;border-radius:50%;background:#F3F5F7;color:#0e0e0e;font:600 11px/22px var(--mono);text-align:center;box-shadow:0 0 0 3px var(--app-bg);z-index:2}
+
+/* brief */
+.brief{background:linear-gradient(180deg,#18221b 0%,var(--app-panel) 70%);border-color:#2b4232}
+.brief ol{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.brief li{display:grid;grid-template-columns:18px 1fr auto;gap:8px;align-items:start;padding:8px 10px;border-radius:6px;background:rgba(255,255,255,.025);border:1px solid var(--app-line)}
+.dot{width:8px;height:8px;border-radius:50%;margin-top:4px;justify-self:center}
+.dot.g{background:var(--accent-2)} .dot.y{background:#E0A43A} .dot.r{background:#E0605A}
+.ask{display:flex;gap:8px;align-items:center;border:1px solid var(--app-line);border-radius:6px;padding:7px 10px;color:var(--app-dim);background:var(--app-bg)}
+.ask > span:first-child{flex:1}
+.summary{display:grid;gap:6px;padding:10px 12px;border-radius:7px;background:rgba(97,214,97,.06);border:1px solid #2b4232}
+.summary p{font-size:12.5px;line-height:1.55;color:var(--app-fg);max-width:none}
+.ins3,.rec3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ins3 .sig{grid-template-columns:3px 1fr;align-items:start;row-gap:10px;padding:12px 12px 12px 0;position:relative}
+.ins3 .sig .bar{grid-row:1/3}
+.ins3 .sig{grid-template-rows:1fr auto}
+.ins3 .sig > .btn{grid-column:2;justify-self:start;align-self:end}
+.ins3 .t > div:first-child{display:grid;gap:6px;justify-items:start}
+.ins3 .tag{margin:0;font-size:9px;padding:3px 5px;background:var(--app-bg)}
+.ins3 .t{gap:6px}
+.rec3 .rec{grid-template-rows:auto auto 1fr auto}
+.stack{display:grid;gap:14px;align-content:start}
+
+/* pulse */
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kpi{background:var(--app-card);border:1px solid var(--app-line);border-radius:6px;padding:8px 10px;display:grid;gap:3px}
+.kpi strong{font:600 18px/1.1 var(--body);font-variant-numeric:tabular-nums}
+.kpi small{color:var(--app-muted);font-size:10.5px}
+.up{color:var(--accent-2)} .down{color:#E0605A}
+.spark{background:var(--app-card);border:1px solid var(--app-line);border-radius:6px;padding:8px 10px;display:grid;gap:4px}
+.spark svg{width:100%;height:auto;display:block}
+.legend{display:flex;gap:12px;color:var(--app-muted);font-size:10.5px}
+.legend i{display:inline-block;width:10px;height:2px;vertical-align:middle;margin-right:4px}
+
+/* signals feed */
+.tabs{display:flex;gap:4px}
+.tabs span{padding:4px 8px;border-radius:5px;color:var(--app-muted);font-size:11px}
+.tabs span.on{background:var(--app-card);color:var(--app-fg);border:1px solid var(--app-line)}
+.sig{display:grid;grid-template-columns:3px 1fr auto;gap:12px;padding:10px 12px 10px 0;border:1px solid var(--app-line);border-radius:7px;background:var(--app-card);align-items:center}
+.sig .bar{align-self:stretch;border-radius:3px 0 0 3px}
+.sig .t{display:grid;gap:3px;min-width:0}
+.sig .t b{font-size:12.5px;font-weight:600}
+.sig .t p{color:var(--app-muted);font-size:11.5px;max-width:none}
+.tag{font:500 9px/1 var(--mono);letter-spacing:.07em;text-transform:uppercase;padding:3px 6px;border-radius:3px;border:1px solid var(--app-line);color:var(--app-muted);margin-right:6px}
+.vs{display:inline-flex;gap:6px;align-items:center;font:500 11px/1 var(--mono);margin-top:3px}
+.vs .chip{padding:3px 6px;border-radius:3px;background:var(--app-bg);border:1px solid var(--app-line)}
+
+/* next best test */
+.nbt{display:grid;gap:8px}
+.rec{border:1px solid var(--app-line);border-radius:7px;padding:10px;background:var(--app-card);display:grid;gap:6px}
+.rec b{font-size:12.5px}
+.rec p{color:var(--app-muted);font-size:11px;max-width:none}
+.rec .src{display:flex;gap:4px;flex-wrap:wrap}
+.rec .src span{font:500 9px/1 var(--mono);padding:3px 5px;border-radius:3px;background:var(--app-bg);color:var(--app-muted);border:1px solid var(--app-line)}
+.rec .go{display:flex;justify-content:space-between;align-items:center}
+.rec .go small{color:var(--app-muted);font-size:10.5px}
+
+/* tests table */
+.tt{width:100%;border-collapse:collapse;min-width:0;font-size:11.5px}
+.tt th{font:500 9.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--app-muted);padding:6px 8px;border-bottom:1px solid var(--app-line);text-align:left}
+.tt td{padding:9px 8px;border-bottom:1px solid var(--app-line);color:var(--app-fg);white-space:nowrap}
+.tt tr:last-child td{border-bottom:0}
+.tt td:first-child{font-weight:500}
+.num{font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:11px}
+.tier-pill{font:500 9.5px/1 var(--mono);padding:3px 7px;border-radius:9px;letter-spacing:.05em;text-transform:uppercase}
+.tier-pill.h{background:#173a22;color:var(--accent-2)} .tier-pill.m{background:#3a2e14;color:#E0A43A} .tier-pill.l{background:#3a1a19;color:#E0605A}
+.fresh{font-size:10.5px;color:var(--app-muted)} .fresh.stale{color:#E0A43A}
+.dec{font-size:10.5px;padding:2px 6px;border-radius:3px;border:1px dashed var(--app-dim);color:var(--app-muted)}
+.dec.done{border-style:solid;border-color:#2b4232;color:var(--accent-2)}
+
+/* pulse */
+.pulse{padding:16px;gap:14px}
+.k5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.k5 .kpi{padding:10px 12px;gap:4px}
+.k5 .kpi strong{font-size:24px}
+.kpi.best{border-color:#2b4232} .kpi.best strong{color:var(--accent-2)}
+.kpi.worst strong{color:#E0A43A}
+.mix{display:flex;height:8px;border-radius:4px;overflow:hidden;gap:2px;margin:8px 0 4px}
+.p-grid{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(0,1fr);gap:12px}
+.panel{background:var(--app-card);border:1px solid var(--app-line);border-radius:8px;padding:12px;display:grid;gap:8px;align-content:start}
+.panel svg{width:100%;height:auto;display:block}
+.foot-note{color:var(--app-muted);font-size:10.5px;max-width:none}
+.bars{display:grid;gap:7px}
+.b{display:grid;grid-template-columns:112px 1fr 34px;gap:8px;align-items:center;font-size:11.5px}
+.b .num{text-align:right}
+.track{height:8px;border-radius:4px;background:var(--app-bg);border:1px solid var(--app-line);overflow:hidden}
+.track i{display:block;height:100%;background:#61D661;border-radius:4px}
+.gapb{color:var(--app-muted)} .gapb .track{border-style:dashed}
+.gapnote{font-size:11px;color:var(--app-muted);border:1px dashed #5a4418;border-radius:6px;padding:8px 10px;display:grid;gap:3px}
+.gapnote b{color:#E0A43A;font-size:11px}
+.lnk{color:var(--accent-2);font-size:11px}
+.bw{display:grid;grid-template-columns:1fr 1fr 1.1fr;gap:12px}
+.bw-card,.bw-why{background:var(--app-card);border:1px solid var(--app-line);border-radius:8px;padding:12px;display:grid;gap:6px;align-content:start}
+.bw-card .q{font-size:13px;color:var(--app-fg);max-width:none}
+.bw-card small{color:var(--app-muted);font-size:10.5px}
+.bw-why{background:rgba(97,214,97,.05);border-color:#2b4232}
+.bw-why p{font-size:12px;max-width:none}
+
+.example{font:500 10px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#E0A43A;border:1px solid #5a4418;padding:4px 7px;border-radius:4px}
+
+.key{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 24px;font-size:13.5px;color:var(--muted)}
+.key div{display:flex;gap:10px;align-items:baseline}
+.key b{font:600 11px/20px var(--mono);min-width:20px;height:20px;border-radius:50%;background:var(--fg);color:var(--bg);text-align:center;flex:none}
+@media (max-width:720px){.key{grid-template-columns:1fr}}
+
+.src-list{display:grid;gap:6px;font-size:13px;color:var(--muted);padding-left:18px;margin:0}
+.src-list a{color:var(--fg);text-underline-offset:3px;text-decoration-color:var(--line)}
+.src-list a:hover{text-decoration-color:var(--accent)}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Viable · Dashboard brainstorm · Sept 2026</div>
+    <h1 style="margin-top:14px">From a list of past tests to an intelligence center</h1>
+    <p class="lede">Today's dashboard answers "what did I run?" The redesign answers "what changed, what does it mean, and what should I test next?" That gives teams a reason to open Viable between testing cycles.</p>
+
+    <div class="thesis">
+      <div><b>Push, not pull</b><span>The leading tools now have agents watch the data and summarize what changed since your last visit.</span></div>
+      <div><b>Every insight carries an action</b><span>A finding arrives with a recommended next step, usually one click from starting it.</span></div>
+      <div><b>Trendlines over snapshots</b><span>Value compounds when results are compared over time and against competitors, not read once and archived.</span></div>
+    </div>
+  </header>
+
+  <!-- 1. RESEARCH -->
+  <section id="research">
+    <div class="head">
+      <div class="eyebrow">Part 1 · Market scan</div>
+      <h2>What competitors and adjacent tools do on their home screens</h2>
+      <p class="lede">Research tools are built around studies, and their home screens are mostly project lists (like Viable's today). Analytics and competitive-intelligence tools are built around monitoring. The strongest ideas come from the second group.</p>
+    </div>
+
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Platform</th><th>What they do (2025–2026)</th><th>What Viable should borrow</th></tr></thead>
+        <tbody>
+          <tr><td>Amplitude<span class="kind">Product analytics</span></td><td>Dashboard Agent runs on a schedule. It produces an executive summary, prioritized insights ("what changed, why it matters, segments affected"), and a week-over-week comparison split into new, different and consistent findings. Specialized agents push results to Slack with recommended next steps.</td><td class="take">A weekly "since your last visit" brief with week-over-week deltas.</td></tr>
+          <tr><td>Dovetail<span class="kind">Research repository</span></td><td>Fall 2025 launch added AI Dashboards (Theme, Sentiment, NPS, CSAT and Keyword widgets) for tracking across releases, plus AI Agents that watch for patterns, send daily digests and post early-warning alerts to Slack, Teams or email.</td><td class="take">Configurable "watchers" and longitudinal widgets.</td></tr>
+          <tr><td>Contentsquare Sense<span class="kind">Experience analytics (incl. Hotjar)</span></td><td>AI analyst launched May 2025. It moves from chat to "next-best-action," auto-summarizes many sessions, and generates Voice of Customer surveys. Their survey: 37% of analytics teams spend up to half their time finding and validating data.</td><td class="take">Attach a next-best-action to every signal. Add an "ask" box.</td></tr>
+          <tr><td>Crayon · Klue<span class="kind">Competitive intelligence</span></td><td>Crayon detects changes to competitors' messaging, feature pages and pricing, scores each change with AI by market impact, and sends alerts and newsletters. Klue gathers website changes, news and reviews into auto-updated battlecards.</td><td class="take">Competitor Watch. Viable can go further by simulating the change.</td></tr>
+          <tr><td>Wynter<span class="kind">B2B message testing</span></td><td>Brand tracking with verified B2B panels every 3, 6 or 12 months. It measures awareness, preference and perception against competitors. Starts at $15,000 per year.</td><td class="take">Recurring tracking against competitors, at a fraction of the cost and cadence.</td></tr>
+          <tr><td>Maze<span class="kind">UX research</span></td><td>AI study builder, AI moderator, theme analysis, automated reports, and a Maze MCP server so teams can query studies from Claude, ChatGPT or Cursor. The home screen stays study-centric.</td><td class="take">Let people ask questions across their whole test history.</td></tr>
+          <tr><td>Productboard Pulse → Spark<span class="kind">Product management</span></td><td>AI-generated feedback themes, conversational trend discovery, and insight reports saved as shareable documents. Now being folded into the Spark agent.</td><td class="take">Save a brief or an answer as a shareable report.</td></tr>
+          <tr><td>Synthetic Users · FishDog · Evidenza · Toluna HarmonAIze<span class="kind">Direct synthetic-research peers</span></td><td>They compete on persona scale (FishDog: 300k+, Toluna: 1M+), speed and fidelity. A 2026 market map of the category describes <em>no</em> dashboards, persistent tracking, monitoring or alerts.</td><td class="take">Open whitespace. Nobody in the category owns "ongoing intelligence."</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Method: public product pages, docs, launch posts and 2026 market reviews. I didn't see logged-in dashboards directly, so the layout details above reflect how each vendor describes its features.</p>
+
+    <div class="gap">
+      <div class="eyebrow">The opening</div>
+      <h3>Monitoring tools see change but can't tell you if it matters. Research tools can test, but only when someone asks.</h3>
+      <p class="note" style="color:var(--fg)">Viable can do both. When a competitor rewrites its hero or your live page changes, Viable can run the new version against the same synthetic audience and show the conversion delta. Crayon can't do that, and Synthetic Users doesn't watch for changes. Viable already has the ingredients: Recommendations already use test history, competitive intelligence and industry trends.</p>
+    </div>
+  </section>
+
+  <!-- 2. FEATURES -->
+  <section id="features">
+    <div class="head">
+      <div class="eyebrow">Part 2 · Feature candidates</div>
+      <h2>Nine features, in three build tiers</h2>
+      <p class="lede">The numbers match the pins on the wireframe below. Tier 1 creates the habit of coming back. Tier 2 makes the value compound. Tier 3 fits the agency beachhead.</p>
+    </div>
+
+    <div class="tier">
+      <div class="tier-h"><h3>Tier 1 · Build first</h3><span>The reason to open the app on a Monday</span></div>
+      <div class="feats">
+        <div class="feat"><div class="n">1</div><h3>What Changed feed</h3><p>A short AI summary, then the three most important insights since the last visit: one competitor change, one change on your own page, and one audience shift.</p><div class="why"><em>From</em>Amplitude Dashboard Agent, Contentsquare Sense</div></div>
+        <div class="feat"><div class="n">2</div><h3>Competitor Watch</h3><p>Track 3 to 5 competitor URLs. When their messaging or pricing changes, Viable automatically simulates the new page against your audience and shows their CVR next to yours, with a one-click head-to-head test.</p><div class="why"><em>From</em>Crayon/Klue, plus a simulation layer only Viable has</div></div>
+        <div class="feat"><div class="n">3</div><h3>Recommended tests</h3><p>Surface the top three from the Recommendations tab inside What Changed, one from each source: competitor analysis, a prior test, and industry and market trends. Each explains why it's suggested and opens a pre-filled test.</p><div class="why"><em>From</em>Contentsquare next-best-action, your existing Recommendations engine</div></div>
+      </div>
+    </div>
+
+    <div class="tier">
+      <div class="tier-h"><h3>Tier 2 · Build next</h3><span>Value that compounds with every test</span></div>
+      <div class="feats">
+        <div class="feat"><div class="n">4</div><h3>Live Page Monitor</h3><p>Re-run live page tests weekly or after a site change. Flag regressions, for example "PM page fell from 3.2% to 2.4% after the Sep 26 update."</p><div class="why"><em>From</em>Amplitude anomaly monitoring, Dovetail early-warning alerts</div></div>
+        <div class="feat"><div class="n">5</div><h3>Viability Pulse</h3><p>A full-width performance section: overall, best and lowest CVR, tests run, and viability mix. Adds a CVR chart plotted against the tier bands and a peer benchmark, coverage by test type and audience, and a best-vs-lowest comparison that explains the difference.</p><div class="why"><em>From</em>Dovetail longitudinal dashboards, Wynter benchmarks</div></div>
+        <div class="feat"><div class="n">6</div><h3>Audience Pulse</h3><p>Saved audiences get re-surveyed on a light cadence. Show which objections and motivations are rising, for example "AI-trust objection up 18% among PMs."</p><div class="why"><em>From</em>Wynter brand tracking, Dovetail theme trends</div></div>
+      </div>
+    </div>
+
+    <div class="tier">
+      <div class="tier-h"><h3>Tier 3 · Scale</h3><span>Built for agencies and teams</span></div>
+      <div class="feats">
+        <div class="feat"><div class="n">7</div><h3>Result freshness + decision log</h3><p>Every test shows its age and whether the market has moved since (for example, two competitors changed). Each test gets a decision state: pending, shipped, or killed.</p><div class="why"><em>From</em>Amplitude "consistent vs. different" framing</div></div>
+        <div class="feat"><div class="n">8</div><h3>Client portfolio view</h3><p>For agencies, a workspace-level view shows the health of every client's concepts, which clients need a re-test, and which briefs are ready to forward.</p><div class="why"><em>From</em>Your GTM: agencies are the beachhead</div></div>
+        <div class="feat"><div class="n">9</div><h3>Digest delivery</h3><p>Send the What Changed summary and top signals to Slack or email on a schedule, with a link back. The dashboard comes to the user.</p><div class="why"><em>From</em>Amplitude, Dovetail, Klue newsletters</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. WIREFRAME -->
+  <section id="wireframe">
+    <div class="head">
+      <div class="eyebrow">Part 3 · Wireframe</div>
+      <h2>Dashboard, reorganized around what changed</h2>
+      <p class="lede">What Changed runs full width and answers "what changed?" and "what should I test next?" The full-width Viability Pulse answers "how am I doing, and why?" Test history sits at the bottom. It keeps the current sidebar and adds a Watchlist entry. Scroll sideways on small screens.</p>
+    </div>
+
+    <div class="frame-wrap">
+      <div class="app">
+        <!-- sidebar -->
+        <aside class="side">
+          <div class="logo"><i></i>viable</div>
+          <div class="ws"><span class="pin" style="top:-9px;left:-9px">8</span><span>Viable</span><span>▾</span></div>
+          <nav class="nav">
+            <a class="on">Dashboard</a>
+            <a>Audiences</a>
+            <a>Tests</a>
+            <a>Recommendations</a>
+            <a>Watchlist <span class="new">NEW</span></a>
+          </nav>
+          <div class="lbl" style="margin-top:6px">Watching</div>
+          <nav class="nav">
+            <a>Competitor A <span class="ct">2</span></a>
+            <a>Competitor B</a>
+            <a>getviable.ai/pm <span class="ct">1</span></a>
+          </nav>
+          <div class="foot"><span>Settings</span><span style="color:var(--app-fg)">Randy Fisher<br><small style="color:var(--app-muted)">Viable</small></span></div>
+        </aside>
+
+        <!-- main -->
+        <div class="main">
+          <div class="top">
+            <div>
+              <h4>Good morning, Randy</h4>
+              <div class="sub">3 new insights since your last visit on Sep 23 · <span class="example">Example data</span></div>
+            </div>
+            <div class="acts"><span class="btn pri">+ Create Test</span></div>
+          </div>
+
+          <!-- row 1: What Changed, full width -->
+          <div class="card brief"><span class="pin">1</span>
+              <div class="ch"><b>What changed</b><span class="meta">Since Sep 23 · updated Mon 8:00am</span></div>
+              <div class="summary">
+                <span class="lbl">Summary</span>
+                <p><b>Trust is your biggest gap this week.</b> A competitor's new hero is beating yours with PMs, your PM page slipped after the Sep 26 update, and "Can I trust AI results?" is now the top objection. All three point to one fix: stronger proof on the page.</p>
+              </div>
+
+              <div class="lbl" style="margin-top:2px">Key insights</div>
+              <div class="ins3">
+              <div class="sig" style="position:relative"><span class="pin" style="top:-10px;left:-10px">2</span><span class="bar" style="background:#E0605A"></span>
+                <div class="t"><div><span class="tag">Competitor</span><b>Competitor A changed hero + pricing page</b></div>
+                  <p>Detected Sep 28. Auto-simulated with your "Product Managers" audience.</p>
+                  <div class="vs"><span class="chip">Them 2.1%</span><span style="color:var(--app-muted)">vs</span><span class="chip">You 1.4%</span></div></div>
+                <span class="btn sm">View change</span></div>
+              <div class="sig" style="position:relative"><span class="pin" style="top:-10px;left:-10px">4</span><span class="bar" style="background:#E0A43A"></span>
+                <div class="t"><div><span class="tag">My page</span><b>getviable.ai/pm regressed: 3.2% → 2.4%</b></div>
+                  <p>Weekly re-test after Sep 26 deploy. Likely cause: testimonial block moved below the fold.</p></div>
+                <span class="btn sm">Compare versions</span></div>
+              <div class="sig" style="position:relative"><span class="pin" style="top:-10px;left:-10px">6</span><span class="bar" style="background:#E0A43A"></span>
+                <div class="t"><div><span class="tag">Audience</span><b>"Can I trust AI results?" objection up 18% among PMs</b></div>
+                  <p>Now the top objection in 2 of 3 saved audiences.</p></div>
+                <span class="btn sm">See quotes</span></div>
+              </div>
+
+              <div class="ch" style="margin-top:4px;position:relative"><span class="pin" style="top:-4px;left:-24px">3</span><span class="lbl">Recommended tests · from Recommendations</span><span class="lnk">View all →</span></div>
+              <div class="rec3">
+                <div class="rec"><div class="src"><span>COMPETITOR ANALYSIS</span></div><b>Head-to-head: your PM page vs Competitor A</b><p>Their new hero is converting at 2.1% with PMs vs your 1.4%. Find out which of their claims is doing the work.</p>
+                  <div class="go"><small>~6 min · pre-filled</small><span class="btn sm pri">Start</span></div></div>
+                <div class="rec"><div class="src"><span>PRIOR TEST</span></div><b>Add a proof block to your Sep 14 (A) winner</b><p>Your best headline still lost PMs on trust. Test it with customer proof above the fold.</p>
+                  <div class="go"><small>~5 min · pre-filled</small><span class="btn sm">Start</span></div></div>
+                <div class="rec"><div class="src"><span>INDUSTRY &amp; MARKET TRENDS</span></div><b>"Concept testing" positioning for marketers</b><p>Search interest in concept testing is rising. Test whether that framing lands better than "synthetic users."</p>
+                  <div class="go"><small>~6 min · pre-filled</small><span class="btn sm">Start</span></div></div>
+              </div>
+          </div>
+
+          <!-- row 2: Viability Pulse, full width -->
+          <div class="card pulse"><span class="pin">5</span>
+            <div class="ch">
+              <div style="display:flex;align-items:baseline;gap:10px"><b style="font-size:14px">Viability pulse</b><span class="meta">How your concepts are performing, across every test</span></div>
+              <div style="display:flex;gap:10px;align-items:center">
+                <div class="tabs"><span class="on">Pre-build tests</span><span>Live page tests</span></div>
+                <div class="tabs"><span>30d</span><span class="on">90d</span><span>All</span></div>
+              </div>
+            </div>
+
+            <!-- KPI strip -->
+            <div class="k5">
+              <div class="kpi"><span class="lbl">Overall CVR</span><strong>0.95%</strong><small>Avg of 4 pre-build tests · <span class="up">▲ above peer 0.8%</span></small></div>
+              <div class="kpi best"><span class="lbl">Best CVR</span><strong>1.4%</strong><small>Positioning · Sep 14 (A)</small></div>
+              <div class="kpi worst"><span class="lbl">Lowest CVR</span><strong>0.6%</strong><small>Positioning · Aug 20</small></div>
+              <div class="kpi"><span class="lbl">Tests run</span><strong>5</strong><small>4 pre-build · 1 live page</small></div>
+              <div class="kpi"><span class="lbl">Viability mix</span>
+                <div class="mix"><span style="flex:2;background:#61D661"></span><span style="flex:2;background:#E0A43A"></span></div>
+                <small><span class="up">2 High</span> · <span style="color:#E0A43A">2 Medium</span> · 0 Low</small></div>
+            </div>
+
+            <div class="p-grid">
+              <!-- main chart -->
+              <div class="panel">
+                <div class="ch"><span class="lbl">Best CVR by test, against viability tiers</span><span class="legend"><span><i style="background:#61D661"></i>High</span><span><i style="background:#E0A43A"></i>Medium</span><span><i style="background:#8C90A8"></i>Peer median</span></span></div>
+                <svg viewBox="0 0 560 220" role="img" aria-label="Best CVR for four positioning tests: Aug 20 0.6%, Aug 21 1.1%, Sep 14 B 0.7%, Sep 14 A 1.4%, against tier bands High at or above 1.0%, Medium 0.4 to 0.9%, Low below 0.4%, with a peer median of 0.8%">
+                  <!-- scale: y = 190 - v*106.25 ; bands at 1.0 (83.75) and 0.4 (147.5) -->
+                  <rect x="44" y="20" width="506" height="63.75" fill="#61D661" fill-opacity=".06"/>
+                  <rect x="44" y="83.75" width="506" height="63.75" fill="#E0A43A" fill-opacity=".05"/>
+                  <rect x="44" y="147.5" width="506" height="42.5" fill="#E0605A" fill-opacity=".05"/>
+                  <text x="546" y="34" text-anchor="end" fill="#61D661" font-size="9.5" font-family="JetBrains Mono,monospace">HIGH ≥1.0%</text>
+                  <text x="546" y="97" text-anchor="end" fill="#E0A43A" font-size="9.5" font-family="JetBrains Mono,monospace">MEDIUM 0.4–0.9%</text>
+                  <text x="546" y="182" text-anchor="end" fill="#E0605A" font-size="9.5" font-family="JetBrains Mono,monospace">LOW ≤0.3%</text>
+                  <g fill="#8C90A8" font-size="9.5" font-family="JetBrains Mono,monospace" text-anchor="end">
+                    <text x="36" y="23">1.6%</text><text x="36" y="87">1.0%</text><text x="36" y="151">0.4%</text><text x="36" y="193">0%</text>
+                  </g>
+                  <line x1="44" x2="550" y1="190" y2="190" stroke="#2c2c34"/>
+                  <line x1="44" x2="550" y1="105" y2="105" stroke="#8C90A8" stroke-width="1.2" stroke-dasharray="4 4"/>
+                  <path d="M100 126.25 L220 73.1 L340 115.6 L460 41.25" fill="none" stroke="#4a4d5c" stroke-width="1.5"/>
+                  <circle cx="100" cy="126.25" r="6" fill="#E0A43A"/>
+                  <circle cx="220" cy="73.1" r="6" fill="#61D661"/>
+                  <circle cx="340" cy="115.6" r="6" fill="#E0A43A"/>
+                  <circle cx="460" cy="41.25" r="7" fill="#61D661" stroke="#0f0f11" stroke-width="2"/>
+                  <g fill="#ECEEF2" font-size="10.5" font-family="JetBrains Mono,monospace" text-anchor="middle">
+                    <text x="100" y="114">0.6%</text><text x="220" y="61">1.1%</text><text x="340" y="104">0.7%</text><text x="460" y="28">1.4%</text>
+                  </g>
+                  <g fill="#8C90A8" font-size="9.5" font-family="Inter,sans-serif" text-anchor="middle">
+                    <text x="100" y="206">Aug 20</text><text x="220" y="206">Aug 21</text><text x="340" y="206">Sep 14 · B</text><text x="460" y="206">Sep 14 · A</text>
+                  </g>
+                </svg>
+                <p class="foot-note">Click a point to open that test. Live page tests are graded on a separate scale (High ≥5.0%), so they get their own tab.</p>
+              </div>
+
+              <!-- right: coverage -->
+              <div class="panel">
+                <span class="lbl">Tests by type</span>
+                <div class="bars">
+                  <div class="b"><span>Positioning</span><div class="track"><i style="width:100%"></i></div><span class="num">4</span></div>
+                  <div class="b"><span>Live page</span><div class="track"><i style="width:25%"></i></div><span class="num">1</span></div>
+                  <div class="b gapb"><span>Product idea</span><div class="track"></div><span class="num">0</span></div>
+                  <div class="b gapb"><span>Product feature</span><div class="track"></div><span class="num">0</span></div>
+                </div>
+                <div class="gapnote"><b>Coverage gap</b>You've tested how to say it 4 times but haven't tested the offer itself. <span class="lnk">Start a Product test →</span></div>
+
+                <span class="lbl" style="margin-top:4px">Avg CVR by audience</span>
+                <div class="bars">
+                  <div class="b"><span>Product managers</span><div class="track"><i style="width:79%"></i></div><span class="num">1.1%</span></div>
+                  <div class="b"><span>Agency owners</span><div class="track"><i style="width:57%"></i></div><span class="num">0.8%</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- best vs lowest -->
+            <div class="bw">
+              <div class="bw-card">
+                <div class="ch"><span class="tier-pill h">Best · 1.4%</span><span class="meta">Positioning · Sep 14 (A) · PMs</span></div>
+                <p class="q">"Make product decisions with confidence, before you build."</p>
+                <small>Strongest stage: landing page → sign-up. Top objection: pricing clarity.</small>
+              </div>
+              <div class="bw-card">
+                <div class="ch"><span class="tier-pill m">Lowest · 0.6%</span><span class="meta">Positioning · Aug 20 · PMs</span></div>
+                <p class="q">"AI-powered synthetic user research for modern teams."</p>
+                <small>Weakest stage: ad → click. Top objection: "Can I trust AI results?"</small>
+              </div>
+              <div class="bw-why">
+                <span class="lbl">What separated them</span>
+                <p>The winner led with an outcome the buyer wants. The lowest led with the technology. Clicks more than doubled when "AI" moved out of the headline.</p>
+                <span class="lnk">Compare side by side →</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- row 3 -->
+          <div class="card"><span class="pin">7</span>
+            <div class="ch"><b>Recent tests</b><span class="btn sm">View all</span></div>
+            <table class="tt">
+              <thead><tr><th>Test</th><th>Type</th><th>Viability</th><th>Best CVR</th><th>Δ vs prior</th><th>Freshness</th><th>Decision</th><th></th></tr></thead>
+              <tbody>
+                <tr><td>Positioning Test · Sep 14</td><td>Positioning</td><td><span class="tier-pill h">High</span></td><td class="num">1.4%</td><td class="num up">+0.3</td><td><span class="fresh">16 days</span></td><td><span class="dec done">Shipped to ads</span></td><td><span class="btn sm">Results →</span></td></tr>
+                <tr><td>Positioning Test · Sep 14 (B)</td><td>Positioning</td><td><span class="tier-pill m">Medium</span></td><td class="num">0.7%</td><td class="num">—</td><td><span class="fresh">16 days</span></td><td><span class="dec">Pending</span></td><td><span class="btn sm">Results →</span></td></tr>
+                <tr><td>Positioning Test · Aug 21</td><td>Positioning</td><td><span class="tier-pill h">High</span></td><td class="num">1.1%</td><td class="num up">+0.5</td><td><span class="fresh stale">40 days · 1 competitor changed</span></td><td><span class="dec">Pending</span></td><td><span class="btn sm">Re-test</span></td></tr>
+                <tr><td>Live Page Test · Aug 20</td><td>Live page</td><td><span class="tier-pill m">Medium</span></td><td class="num">3.2%</td><td class="num down">−0.8 now</td><td><span class="fresh stale">Monitoring: regressed</span></td><td><span class="dec done">Shipped</span></td><td><span class="btn sm">Re-test</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="key">
+      <div><b>1</b>What Changed: summary + signals + ask</div>
+      <div><b>2</b>Competitor Watch signal</div>
+      <div><b>3</b>Recommended tests: competitor, prior test, market</div>
+      <div><b>4</b>Live page regression signal</div>
+      <div><b>5</b>Viability pulse vs peer benchmark</div>
+      <div><b>6</b>Audience objection trend</div>
+      <div><b>7</b>Freshness + decision state</div>
+      <div><b>8</b>Workspace switcher → client portfolio</div>
+    </div>
+    <p class="note">All numbers, competitor names and signals in the wireframe are illustrative examples.</p>
+    <div class="head" style="margin-top:28px">
+      <div class="eyebrow">What goes where</div>
+      <h3 style="font-size:1.35rem">Each area answers one question, and nothing appears in two places</h3>
+      <p class="note">An item lives in one place. The summary can mention signals but never repeats them in full. Signals link to evidence. Only Next Best Test starts a new test.</p>
+    </div>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Area</th><th>The question it answers</th><th>Data that belongs here</th><th>Keep out</th></tr></thead>
+        <tbody>
+          <tr><td>What Changed · summary<span class="kind">Top of the main card</span></td><td>What does this week add up to?</td><td>2–3 AI-written sentences that connect the three insights below into one takeaway. Regenerated whenever new signals arrive, or on a weekly schedule.</td><td>New facts not shown in the list. Buttons. Anything longer than a short paragraph.</td></tr>
+          <tr><td>What Changed · insights<span class="kind">List in the main card</span></td><td>What happened since my last visit?</td><td>Exactly three insights, one from each source:<br>• <b>Competitor:</b> the most important page, pricing or message change, auto-simulated with your CVR vs theirs<br>• <b>My page:</b> the biggest gain or drop from live page re-tests<br>• <b>Audience:</b> the objection or motivation that moved most in saved audiences<br>Each shows severity, the measured change and a "view evidence" action. Everything else lives on the Watchlist page.</td><td>More than three items. Filters. "Start test" buttons. Static KPIs.</td></tr>
+          <tr><td>Viability pulse<span class="kind">Full-width, middle</span></td><td>How am I doing overall, and why?</td><td>Standing performance numbers, split by scale (pre-build vs live page): overall, best and lowest CVR; tests run; viability mix; CVR by test against tier bands and a peer median; tests by type and audience; best vs lowest with the reason they differ.</td><td>Events or alerts. Those become signals.</td></tr>
+          <tr><td>Recommended tests<span class="kind">Bottom of What Changed</span></td><td>What should I test next?</td><td>Exactly three pre-filled tests from the Recommendations engine, one per source: competitor analysis, a prior test, and industry and market trends. Each shows its source, the reason, run time and a Start button.</td><td>Restated insights. More than three. Tests with no clear reason.</td></tr>
+          <tr><td>Recent tests<span class="kind">Bottom</span></td><td>What have I run, and is it still true?</td><td>Test list with viability tier, CVR, change vs prior test, freshness, and decision state.</td><td>Commentary. That belongs in the summary.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="sources">
+    <div class="head"><div class="eyebrow">Sources</div></div>
+    <ol class="src-list">
+      <li><a href="https://amplitude.com/docs/agents/dashboard-agent">Amplitude: Dashboard Agent docs</a></li>
+      <li><a href="https://amplitude.com/blog/amplitude-ai-agents-launch">Amplitude: AI Agents launch</a></li>
+      <li><a href="https://dovetail.com/blog/2025-fall-launch/">Dovetail: Fall 2025 launch (AI Dashboards, AI Agents)</a></li>
+      <li><a href="https://www.martech360.com/news/stack-platforms/contentsquare-introduces-sense-ai-powered-analyst-that-automates-insights-and-action">MarTech360: Contentsquare introduces Sense (May 2025)</a></li>
+      <li><a href="https://www.contify.com/resources/blog/crayon-alternatives/">Contify: Crayon and Klue capabilities (2026)</a></li>
+      <li><a href="https://wynter.com/post/top-b2b-brand-tracking-tools">Wynter: B2B brand tracking tools</a></li>
+      <li><a href="https://maze.co/ai/">Maze: Maze AI</a></li>
+      <li><a href="https://support.productboard.com/hc/en-us/articles/34626825281171-Productboard-Pulse">Productboard: Pulse support article</a></li>
+      <li><a href="https://fish.dog/news/synthetic-research-platforms-the-2026-market-map">FishDog: Synthetic Research Platforms, the 2026 Market Map</a></li>
+    </ol>
+  </section>
+
+</div>
+
+</body>
+</html>
